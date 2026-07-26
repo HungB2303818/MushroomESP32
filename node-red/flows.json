@@ -1,0 +1,2805 @@
+[
+    {
+        "id": "edb4e046c9aa16e2",
+        "type": "tab",
+        "label": "sensing",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "8342e9099a477a03",
+        "type": "tab",
+        "label": "tasking",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "a71c2d9e4f603b18",
+        "type": "tab",
+        "label": "dashboard actuator control",
+        "disabled": false,
+        "info": "Điều khiển máy phun sương, quạt và đèn theo flow tasking chung.",
+        "env": []
+    },
+    {
+        "id": "f0a1b2c3d4e5f601",
+        "type": "tab",
+        "label": "Dashboard - Lịch sử",
+        "disabled": false,
+        "info": "Dashboard lịch sử tổng hợp từ MySQL. Không viết cứng device_code; sensor mới cùng observed_property sẽ tự xuất hiện thành series mới, actuator mới tự được tính trong task.",
+        "env": []
+    },
+    {
+        "id": "448fe177639c9a7f",
+        "type": "tab",
+        "label": "dashboard overview",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "9fcab272b93b0ac2",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "localhost:1883",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "492c3741a724cfb1",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-light",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#0094CE",
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#fafafa",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#1bbfff",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#0094ce",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey",
+                "palette": "light"
+            }
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "ef19cd15ad16cb00",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "mqtt.cusc.vn",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "c47a443392351ad0",
+        "type": "ui-base",
+        "name": "My Dashboard",
+        "path": "/dashboard",
+        "appIcon": "",
+        "includeClientData": true,
+        "acceptsClientConfig": [
+            "ui-notification",
+            "ui-control"
+        ],
+        "showPathInSidebar": false,
+        "headerContent": "page",
+        "navigationStyle": "default",
+        "titleBarStyle": "default",
+        "showReconnectNotification": true,
+        "notificationDisplayTime": 1,
+        "showDisconnectNotification": true,
+        "allowInstall": false
+    },
+    {
+        "id": "1d673f9f10cacb46",
+        "type": "ui-theme",
+        "name": "Default Theme",
+        "colors": {
+            "surface": "#ffffff",
+            "primary": "#0094CE",
+            "bgPage": "#eeeeee",
+            "groupBg": "#ffffff",
+            "groupOutline": "#cccccc"
+        },
+        "sizes": {
+            "density": "default",
+            "pagePadding": "12px",
+            "groupGap": "12px",
+            "groupBorderRadius": "4px",
+            "widgetGap": "12px"
+        }
+    },
+    {
+        "id": "e0c5f134542ac77e",
+        "type": "MySQLdatabase",
+        "name": "official db",
+        "host": "127.0.0.1",
+        "port": "3306",
+        "db": "iot_mushroom",
+        "tz": "",
+        "charset": "UTF8"
+    },
+    {
+        "id": "c0ffee0000000003",
+        "type": "ui-theme",
+        "name": "Mushroom Light",
+        "colors": {
+            "surface": "#ffffff",
+            "primary": "#16a34a",
+            "bgPage": "#f1f5f9",
+            "groupBg": "#ffffff",
+            "groupOutline": "#e2e8f0"
+        },
+        "sizes": {
+            "density": "default",
+            "pagePadding": "16px",
+            "groupGap": "14px",
+            "groupBorderRadius": "16px",
+            "widgetGap": "12px"
+        }
+    },
+    {
+        "id": "c0ffee0000000004",
+        "type": "ui-page",
+        "name": "Lịch sử",
+        "ui": "c47a443392351ad0",
+        "path": "/history",
+        "icon": "history",
+        "layout": "grid",
+        "theme": "c0ffee0000000003",
+        "breakpoints": [
+            {
+                "name": "Default",
+                "px": "0",
+                "cols": "3"
+            },
+            {
+                "name": "Tablet",
+                "px": "576",
+                "cols": "6"
+            },
+            {
+                "name": "Small Desktop",
+                "px": "768",
+                "cols": "9"
+            },
+            {
+                "name": "Desktop",
+                "px": "1024",
+                "cols": "12"
+            }
+        ],
+        "order": 3,
+        "className": "",
+        "visible": true,
+        "disabled": false
+    },
+    {
+        "id": "c0ffee0000000010",
+        "type": "ui-group",
+        "name": "Bộ lọc dữ liệu",
+        "page": "c0ffee0000000004",
+        "width": "12",
+        "height": "2",
+        "order": 1,
+        "showTitle": false,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default"
+    },
+    {
+        "id": "c0ffee0000000011",
+        "type": "ui-group",
+        "name": "Tổng quan lịch sử",
+        "page": "c0ffee0000000004",
+        "width": "12",
+        "height": "1",
+        "order": 2,
+        "showTitle": false,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default"
+    },
+    {
+        "id": "c0ffee0000000012",
+        "type": "ui-group",
+        "name": "Lịch sử nhiệt độ",
+        "page": "c0ffee0000000004",
+        "width": "6",
+        "height": "1",
+        "order": 3,
+        "showTitle": false,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default"
+    },
+    {
+        "id": "c0ffee0000000013",
+        "type": "ui-group",
+        "name": "Lịch sử độ ẩm",
+        "page": "c0ffee0000000004",
+        "width": "6",
+        "height": "1",
+        "order": 4,
+        "showTitle": false,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default"
+    },
+    {
+        "id": "74c84250686fa996",
+        "type": "ui-page",
+        "name": "Tổng quan",
+        "ui": "c47a443392351ad0",
+        "path": "/overview",
+        "icon": "view-dashboard",
+        "layout": "grid",
+        "theme": "c0ffee0000000003",
+        "breakpoints": [
+            {
+                "name": "Default",
+                "px": "0",
+                "cols": "3"
+            },
+            {
+                "name": "Tablet",
+                "px": "576",
+                "cols": "6"
+            },
+            {
+                "name": "Small Desktop",
+                "px": "768",
+                "cols": "9"
+            },
+            {
+                "name": "Desktop",
+                "px": "1024",
+                "cols": "12"
+            }
+        ],
+        "order": 1,
+        "className": "",
+        "visible": true,
+        "disabled": false
+    },
+    {
+        "id": "e201de97ad98cab2",
+        "type": "ui-group",
+        "name": "Trạng thái thiết bị",
+        "page": "74c84250686fa996",
+        "width": "12",
+        "height": "2",
+        "order": 6,
+        "showTitle": true,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default"
+    },
+    {
+        "id": "292a30d562b5eeae",
+        "type": "ui-group",
+        "name": "Biểu đồ gần đây",
+        "page": "74c84250686fa996",
+        "width": "12",
+        "height": "5",
+        "order": 7,
+        "showTitle": true,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default"
+    },
+    {
+        "id": "b82d3eaf50714c29",
+        "type": "ui-page",
+        "name": "Điều khiển",
+        "ui": "c47a443392351ad0",
+        "path": "/control",
+        "icon": "toggle-switch",
+        "layout": "grid",
+        "theme": "c0ffee0000000003",
+        "breakpoints": [
+            {
+                "name": "Default",
+                "px": "0",
+                "cols": "3"
+            },
+            {
+                "name": "Tablet",
+                "px": "576",
+                "cols": "6"
+            },
+            {
+                "name": "Small Desktop",
+                "px": "768",
+                "cols": "9"
+            },
+            {
+                "name": "Desktop",
+                "px": "1024",
+                "cols": "12"
+            }
+        ],
+        "order": 2,
+        "className": "",
+        "visible": "true",
+        "disabled": "false"
+    },
+    {
+        "id": "5b709ef0a74aa222",
+        "type": "ui-group",
+        "name": "Điều khiển thiết bị",
+        "page": "b82d3eaf50714c29",
+        "width": "12",
+        "height": "5",
+        "order": 1,
+        "showTitle": false,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default"
+    },
+    {
+        "id": "fc6172e394b5806d",
+        "type": "ui-group",
+        "name": "Phản hồi lệnh gần nhất",
+        "page": "b82d3eaf50714c29",
+        "width": "12",
+        "height": "2",
+        "order": 2,
+        "showTitle": true,
+        "className": "",
+        "visible": true,
+        "disabled": false,
+        "groupType": "default"
+    },
+    {
+        "id": "0d7283f4a5c6917e",
+        "type": "ui-group",
+        "name": "CÁC LỆNH GẦN ĐÂY",
+        "page": "b82d3eaf50714c29",
+        "width": "12",
+        "height": "5",
+        "order": 3,
+        "showTitle": true,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default"
+    },
+    {
+        "id": "3ae3f2db0fbcb7bd",
+        "type": "ui-group",
+        "name": "Thông số nhiệt độ",
+        "page": "74c84250686fa996",
+        "width": "3",
+        "height": "1",
+        "order": 3,
+        "showTitle": false,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default"
+    },
+    {
+        "id": "e2c6945ff3d722ee",
+        "type": "ui-group",
+        "name": "Thông số độ ẩm",
+        "page": "74c84250686fa996",
+        "width": "3",
+        "height": "1",
+        "order": 2,
+        "showTitle": false,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default"
+    },
+    {
+        "id": "79665e6c561e7d28",
+        "type": "ui-group",
+        "name": "Thông số độ sáng",
+        "page": "74c84250686fa996",
+        "width": "3",
+        "height": "1",
+        "order": 4,
+        "showTitle": false,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default"
+    },
+    {
+        "id": "08a1fab380b92bb4",
+        "type": "ui-group",
+        "name": "Thông số độ ẩm đất",
+        "page": "74c84250686fa996",
+        "width": "3",
+        "height": "1",
+        "order": 1,
+        "showTitle": false,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default"
+    },
+    {
+        "id": "4e8ba4fa3cdfe956",
+        "type": "ui-group",
+        "name": "Trạng thái môi trường",
+        "page": "74c84250686fa996",
+        "width": "12",
+        "height": "3",
+        "order": 5,
+        "showTitle": false,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default"
+    },
+    {
+        "id": "afffef088eacd692",
+        "type": "json",
+        "z": "edb4e046c9aa16e2",
+        "name": "To JS Object",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 470,
+        "y": 200,
+        "wires": [
+            [
+                "06c72a9f604e0f92"
+            ]
+        ]
+    },
+    {
+        "id": "06c72a9f604e0f92",
+        "type": "function",
+        "z": "edb4e046c9aa16e2",
+        "name": "check and create INSERT",
+        "func": "// Lưu topic MQTT trước khi thay msg.topic bằng câu SQL\nconst mqttTopic = String(msg.topic || \"\").trim();\n\n\nconst match = mqttTopic.match(\n    /^sensor\\/([A-Za-z0-9_-]{1,50})\\/([a-z][a-z0-9_]{0,49})$/\n);\n\nif (!match) {\n    node.warn(`Topic không hợp lệ: ${mqttTopic}`);\n    return [null, null];\n}\n\nconst deviceCode = match[1];\nconst property = match[2];\n\n// Payload có thể là:\n// {\"value\": 23.7}\n// hoặc chỉ là: 23.7\nconst data =\n    typeof msg.payload === \"object\" && msg.payload !== null\n        ? msg.payload\n        : { value: msg.payload };\n\nconst value = Number(data.value);\n\nif (!Number.isFinite(value)) {\n    node.warn(\"payload.value không phải là một số hợp lệ\");\n    return [null, null];\n}\n\n// Giới hạn kiểm tra dữ liệu cảm biến\nconst validRanges = {\n    temperature: [-20, 80],\n    humidity: [0, 100],\n    light_level: [0, 100]\n};\n\nconst range = validRanges[property];\n\nif (range) {\n    const [minValue, maxValue] = range;\n\n    if (value < minValue || value > maxValue) {\n        node.warn(\n            `Giá trị ${property} nằm ngoài khoảng hợp lệ: ${value}`\n        );\n        return [null, null];\n    }\n} else {\n    node.warn(\n        `Chưa cấu hình khoảng hợp lệ cho ${property}, chỉ kiểm tra kiểu số`\n    );\n}\n\n// Hàm chuyển chuỗi thành giá trị an toàn khi đưa vào SQL\nfunction sqlString(text) {\n    return \"'\" + String(text).replace(/'/g, \"''\") + \"'\";\n}\n\nconst receivedAt = Date.now();\n\n/*\n * OUTPUT 1: lưu vào MySQL\n *\n * Clone message để việc thay đổi msg.topic thành câu SQL\n * không ảnh hưởng đến message gửi sang Dashboard.\n */\nconst dbMsg = RED.util.cloneMessage(msg);\n\n// Giữ các thuộc tính cho node update last_seen_at phía sau\ndbMsg.device_code = deviceCode;\ndbMsg.sensor_property = property;\ndbMsg.sensor_value = value;\ndbMsg.mqtt_topic = mqttTopic;\ndbMsg.received_at = receivedAt;\n\n// Tìm datastream và thêm Observation\ndbMsg.topic = `\n    INSERT INTO observation (\n        datastream_id,\n        value,\n        observed_at\n    )\n    SELECT\n        d.id,\n        ${value},\n        NOW()\n    FROM datastream d\n    INNER JOIN sensor s\n        ON s.id = d.sensor_id\n    WHERE s.device_code = ${sqlString(deviceCode)}\n      AND d.observed_property = ${sqlString(property)}\n      AND d.mqtt_topic = ${sqlString(mqttTopic)}\n    LIMIT 1\n`;\n\n/*\n * OUTPUT 2: gửi dữ liệu thời gian thực sang Dashboard\n *\n * msg.topic được rút gọn thành:\n * temperature hoặc humidity\n * để Switch node trên Dashboard dễ phân loại.\n */\nconst dashboardValue =\n    property === \"light_level\"\n        ? Math.round(value * 10) / 10\n        : value;\n\nconst dashboardMsg = {\n    topic: property,\n    payload: dashboardValue,\n    device_code: deviceCode,\n    mqtt_topic: mqttTopic,\n    received_at: receivedAt\n};\n\nreturn [dbMsg, dashboardMsg];",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 530,
+        "y": 300,
+        "wires": [
+            [
+                "1fa45c9f8f8ab24c"
+            ],
+            [
+                "d92dd2e75a655836"
+            ]
+        ]
+    },
+    {
+        "id": "1fa45c9f8f8ab24c",
+        "type": "mysql",
+        "z": "edb4e046c9aa16e2",
+        "mydb": "e0c5f134542ac77e",
+        "name": "save Observation",
+        "x": 790,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "65023957fb0202fb",
+        "type": "inject",
+        "z": "edb4e046c9aa16e2",
+        "name": "test temperature",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "sensor/SENSOR_DHT11_01/temperature",
+        "payload": "{\"value\":33}",
+        "payloadType": "json",
+        "x": 220,
+        "y": 260,
+        "wires": [
+            [
+                "afffef088eacd692"
+            ]
+        ]
+    },
+    {
+        "id": "d92dd2e75a655836",
+        "type": "link out",
+        "z": "edb4e046c9aa16e2",
+        "name": "Sensor Realtime",
+        "mode": "link",
+        "links": [],
+        "x": 735,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "5a84241d4ad9abe9",
+        "type": "inject",
+        "z": "edb4e046c9aa16e2",
+        "name": "test humidity",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "sensor/SENSOR_DHT11_01/humidity",
+        "payload": "{\"value\":61}",
+        "payloadType": "str",
+        "x": 230,
+        "y": 360,
+        "wires": [
+            [
+                "afffef088eacd692"
+            ]
+        ]
+    },
+    {
+        "id": "3fec249d2553b623",
+        "type": "mqtt in",
+        "z": "edb4e046c9aa16e2",
+        "name": "",
+        "topic": "sensor/+/+",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "9fcab272b93b0ac2",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 220,
+        "y": 160,
+        "wires": [
+            [
+                "afffef088eacd692"
+            ]
+        ]
+    },
+    {
+        "id": "e94613922b79c341",
+        "type": "inject",
+        "z": "8342e9099a477a03",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"device_code\":\"MIST_PUMP_01\",\"capability_code\":\"ON_OFF\",\"target_value\":\"ON\",\"source\":\"USER\"}",
+        "payloadType": "json",
+        "x": 270,
+        "y": 120,
+        "wires": [
+            [
+                "6bf3dad81c7490b2"
+            ]
+        ]
+    },
+    {
+        "id": "6bf3dad81c7490b2",
+        "type": "function",
+        "z": "8342e9099a477a03",
+        "name": "validate command",
+        "func": "const request =\n    typeof msg.payload === \"object\" &&\n    msg.payload !== null &&\n    !Array.isArray(msg.payload)\n        ? msg.payload\n        : {};\n\n// Mã actuator\nconst deviceCode = String(\n    request.device_code || \"\"\n)\n    .trim()\n    .toUpperCase();\n\n// Giá trị điều khiển yêu cầu\nconst targetValue = String(\n    request.target_value ||\n    request.target_state ||\n    request.state ||\n    \"\"\n)\n    .trim()\n    .toUpperCase();\n\n// Capability mặc định của hệ thống hiện tại\nconst capabilityCode = String(\n    request.capability_code || \"ON_OFF\"\n)\n    .trim()\n    .toUpperCase();\n\n// Nguồn tạo task\nconst rawSource = String(\n    request.source || \"DASHBOARD\"\n)\n    .trim()\n    .toUpperCase();\n\n// Kiểm tra device_code\nif (!/^[A-Z0-9_-]{1,50}$/.test(deviceCode)) {\n    node.warn(\n        `device_code không hợp lệ: ${deviceCode}`\n    );\n    return null;\n}\n\n// Kiểm tra capability_code\nif (!/^[A-Z0-9_-]{1,50}$/.test(capabilityCode)) {\n    node.warn(\n        `capability_code không hợp lệ: ${capabilityCode}`\n    );\n    return null;\n}\n\n// Kiểm tra giá trị yêu cầu\nif (!targetValue) {\n    node.warn(\"Thiếu target_value\");\n    return null;\n}\n\n// Vì capability hiện tại là ON_OFF,\n// chỉ chấp nhận ON hoặc OFF\nif (\n    capabilityCode === \"ON_OFF\" &&\n    ![\"ON\", \"OFF\"].includes(targetValue)\n) {\n    node.warn(\n        `Giá trị ${targetValue} không hợp lệ cho capability ON_OFF`\n    );\n    return null;\n}\n\n// Chuẩn hóa source theo ENUM:\n// USER, SYSTEM, AUTO_LOCAL\nlet commandSource;\n\nswitch (rawSource) {\n    case \"USER\":\n    case \"DASHBOARD\":\n        commandSource = \"USER\";\n        break;\n\n    case \"AUTO\":\n    case \"AUTO_LOCAL\":\n        commandSource = \"AUTO_LOCAL\";\n        break;\n\n    case \"SYSTEM\":\n    case \"TEST\":\n        commandSource = \"SYSTEM\";\n        break;\n\n    default:\n        node.warn(\n            `source không hợp lệ: ${rawSource}`\n        );\n        return null;\n}\n\n// Lưu dữ liệu cho các node phía sau\nmsg.device_code = deviceCode;\nmsg.capability_code = capabilityCode;\nmsg.target_value = targetValue;\n\n// Có thể giữ target_state để tương thích\n// với các node cũ trong lúc refactor\nmsg.target_state = targetValue;\n\nmsg.command_source = commandSource;\nmsg.requested_at = Date.now();\n\n// Tìm actuator cùng TaskingCapability\nmsg.topic = `\n    SELECT\n        tc.id AS tasking_capability_id,\n        tc.capability_code,\n        tc.allowed_values,\n        tc.command_topic,\n        tc.status_topic,\n\n        a.id AS actuator_id,\n        a.device_code,\n        a.name AS actuator_name,\n        a.type AS actuator_type\n\n    FROM tasking_capability AS tc\n\n    INNER JOIN actuator AS a\n        ON a.id = tc.actuator_id\n\n    WHERE a.device_code = ?\n      AND tc.capability_code = ?\n\n    LIMIT 1\n`;\n\nmsg.payload = [\n    deviceCode,\n    capabilityCode\n];\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 450,
+        "y": 80,
+        "wires": [
+            [
+                "b87422da726be15f"
+            ]
+        ]
+    },
+    {
+        "id": "b87422da726be15f",
+        "type": "mysql",
+        "z": "8342e9099a477a03",
+        "mydb": "e0c5f134542ac77e",
+        "name": "find actuator",
+        "x": 690,
+        "y": 80,
+        "wires": [
+            [
+                "9c7ce80abba9ff6e"
+            ]
+        ]
+    },
+    {
+        "id": "9c7ce80abba9ff6e",
+        "type": "function",
+        "z": "8342e9099a477a03",
+        "name": "create task",
+        "func": "const rows = msg.payload;\n\n// Kiểm tra kết quả truy vấn\nif (!Array.isArray(rows) || rows.length === 0) {\n    node.error(\n        `Không tìm thấy capability ${msg.capability_code} ` +\n        `cho thiết bị ${msg.device_code}`,\n        msg\n    );\n    return null;\n}\n\nconst capability = rows[0];\n\n// Kiểm tra ID capability\nconst capabilityId = Number(\n    capability.tasking_capability_id\n);\n\nif (\n    !Number.isInteger(capabilityId) ||\n    capabilityId <= 0\n) {\n    node.error(\n        \"tasking_capability_id không hợp lệ\",\n        msg\n    );\n    return null;\n}\n\n// Đọc allowed_values\nlet allowedValues = capability.allowed_values;\n\nif (typeof allowedValues === \"string\") {\n    try {\n        allowedValues = JSON.parse(allowedValues);\n    } catch (error) {\n        node.error(\n            \"allowed_values không phải JSON hợp lệ\",\n            msg\n        );\n        return null;\n    }\n}\n\nif (!Array.isArray(allowedValues)) {\n    node.error(\n        \"allowed_values phải là một mảng\",\n        msg\n    );\n    return null;\n}\n\n// Chuẩn hóa các giá trị được phép\nallowedValues = allowedValues.map(value =>\n    String(value).trim().toUpperCase()\n);\n\n// Kiểm tra target_value theo dữ liệu trong capability\nif (!allowedValues.includes(msg.target_value)) {\n    node.error(\n        `Giá trị ${msg.target_value} không hợp lệ. ` +\n        `Các giá trị cho phép: ${allowedValues.join(\", \")}`,\n        msg\n    );\n    return null;\n}\n\n// Lưu thông tin cho các node phía sau\nmsg.tasking_capability_id = capabilityId;\nmsg.actuator_id = Number(capability.actuator_id);\n\nmsg.actuator_name = capability.actuator_name;\nmsg.actuator_type = capability.actuator_type;\n\nmsg.command_topic = capability.command_topic;\nmsg.status_topic = capability.status_topic;\nmsg.allowed_values = allowedValues;\n\n// Chuẩn bị INSERT task\nmsg.topic = `\n    INSERT INTO task (\n        tasking_capability_id,\n        target_value,\n        source,\n        status,\n        created_at\n    )\n    VALUES (?, ?, ?, 'PENDING', NOW())\n`;\n\nmsg.payload = [\n    msg.tasking_capability_id,\n    msg.target_value,\n    msg.command_source\n];\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 450,
+        "y": 180,
+        "wires": [
+            [
+                "a72e31cf677128fe"
+            ]
+        ]
+    },
+    {
+        "id": "a72e31cf677128fe",
+        "type": "mysql",
+        "z": "8342e9099a477a03",
+        "mydb": "e0c5f134542ac77e",
+        "name": "save task",
+        "x": 700,
+        "y": 180,
+        "wires": [
+            [
+                "60de8d0ce74227fa"
+            ]
+        ]
+    },
+    {
+        "id": "60de8d0ce74227fa",
+        "type": "function",
+        "z": "8342e9099a477a03",
+        "name": "create mqtt command",
+        "func": "const result = msg.payload;\n\nif (!result || Number(result.affectedRows) !== 1) {\n    node.error(`Không tạo được task cho thiết bị ${msg.device_code}`, msg);\n    return null;\n}\n\nconst taskId = Number(result.insertId);\nif (!Number.isInteger(taskId) || taskId <= 0) {\n    node.error(`task_id không hợp lệ: ${result.insertId}`, msg);\n    return null;\n}\n\nconst commandTopic = String(msg.command_topic || \"\").trim();\nif (!commandTopic) {\n    node.error(`Không tìm thấy command_topic của ${msg.device_code}`, msg);\n    return null;\n}\n\nconst deviceCode = String(msg.device_code || \"\").trim().toUpperCase();\nconst capabilityCode = String(msg.capability_code || \"\").trim().toUpperCase();\nconst targetValue = String(msg.target_value || \"\").trim().toUpperCase();\nconst source = String(msg.command_source || \"USER\").trim().toUpperCase();\n\nif (!deviceCode || !capabilityCode || !targetValue) {\n    node.error(\"Thiếu dữ liệu bắt buộc để tạo MQTT command\", msg);\n    return null;\n}\n\nfunction toVietnamIso(timestamp) {\n    const date = new Date(timestamp || Date.now());\n    if (Number.isNaN(date.getTime())) {\n        return null;\n    }\n    return new Date(date.getTime() + 7 * 60 * 60 * 1000)\n        .toISOString()\n        .replace(\"Z\", \"+07:00\");\n}\n\nmsg.task_id = taskId;\nmsg.topic = commandTopic;\nmsg.payload = JSON.stringify({\n    task_id: taskId,\n    device_code: deviceCode,\n    capability_code: capabilityCode,\n    target_value: targetValue,\n    source: source,\n    requested_at: toVietnamIso(msg.requested_at)\n});\nmsg.qos = 1;\nmsg.retain = false;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 300,
+        "wires": [
+            [
+                "6b6931f1f463d2d7"
+            ]
+        ]
+    },
+    {
+        "id": "6b6931f1f463d2d7",
+        "type": "mqtt out",
+        "z": "8342e9099a477a03",
+        "name": "send command",
+        "topic": "",
+        "qos": "1",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "9fcab272b93b0ac2",
+        "x": 700,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "dcd708282e88fa1d",
+        "type": "mqtt in",
+        "z": "8342e9099a477a03",
+        "name": "ESP32 response",
+        "topic": "actuator/+/status",
+        "qos": "1",
+        "datatype": "utf8",
+        "broker": "9fcab272b93b0ac2",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 220,
+        "y": 420,
+        "wires": [
+            [
+                "975421a701e9f5c0"
+            ]
+        ]
+    },
+    {
+        "id": "975421a701e9f5c0",
+        "type": "json",
+        "z": "8342e9099a477a03",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 370,
+        "y": 480,
+        "wires": [
+            [
+                "71916db415b59534"
+            ]
+        ]
+    },
+    {
+        "id": "71916db415b59534",
+        "type": "function",
+        "z": "8342e9099a477a03",
+        "name": "validate response",
+        "func": "const data = msg.payload;\n\nfunction reject(reason) {\n    const errorMsg = RED.util.cloneMessage(msg);\n    errorMsg.error_reason = reason;\n    node.warn(reason);\n    return [null, null, errorMsg];\n}\n\nif (!data || typeof data !== \"object\" || Array.isArray(data)) {\n    return reject(\"Payload phải là JSON object\");\n}\n\nconst requiredFields = [\n    \"task_id\",\n    \"device_code\",\n    \"capability_code\",\n    \"current_value\",\n    \"status\",\n    \"reported_at\"\n];\n\nfor (const field of requiredFields) {\n    if (data[field] === undefined || data[field] === null || String(data[field]).trim() === \"\") {\n        return reject(`Thiếu trường: ${field}`);\n    }\n}\n\nconst taskId = Number(data.task_id);\nconst deviceCode = String(data.device_code).trim().toUpperCase();\nconst capabilityCode = String(data.capability_code).trim().toUpperCase();\nconst currentValue = String(data.current_value).trim().toUpperCase();\nconst taskStatus = String(data.status).trim().toUpperCase();\nconst reportedAt = String(data.reported_at).trim();\n\nif (!Number.isInteger(taskId) || taskId <= 0) {\n    return reject(\"task_id không hợp lệ\");\n}\nif (!/^[A-Z0-9_-]{1,50}$/.test(deviceCode)) {\n    return reject(\"device_code không hợp lệ\");\n}\nif (!/^[A-Z0-9_-]{1,50}$/.test(capabilityCode)) {\n    return reject(\"capability_code không hợp lệ\");\n}\nif (capabilityCode === \"ON_OFF\" && ![\"ON\", \"OFF\"].includes(currentValue)) {\n    return reject(\"current_value chỉ được nhận ON hoặc OFF với capability ON_OFF\");\n}\nif (![\"COMPLETED\", \"FAILED\"].includes(taskStatus)) {\n    return reject(\"status chỉ được nhận COMPLETED hoặc FAILED\");\n}\nif (Number.isNaN(Date.parse(reportedAt))) {\n    return reject(\"reported_at không đúng định dạng ISO 8601\");\n}\n\nconst mqttTopic = String(msg.topic || \"\").trim();\nconst match = mqttTopic.match(/^actuator\\/([A-Z0-9_-]{1,50})\\/status$/);\nif (!match) {\n    return reject(`Topic không hợp lệ: ${mqttTopic}`);\n}\nif (match[1] !== deviceCode) {\n    return reject(`device_code trong topic (${match[1]}) không khớp payload (${deviceCode})`);\n}\n\nconst statusData = {\n    task_id: taskId,\n    device_code: deviceCode,\n    capability_code: capabilityCode,\n    current_value: currentValue,\n    status: taskStatus,\n    reported_at: reportedAt,\n    error_code: data.error_code || null,\n    message: data.message || null,\n    mqtt_topic: mqttTopic\n};\n\nconst dbMsg = RED.util.cloneMessage(msg);\ndbMsg.actuator_status = statusData;\ndbMsg.topic = `\n    UPDATE task AS t\n    INNER JOIN tasking_capability AS tc\n        ON tc.id = t.tasking_capability_id\n    INNER JOIN actuator AS a\n        ON a.id = tc.actuator_id\n    SET\n        t.status = ?,\n        t.completed_at = NOW()\n    WHERE t.id = ?\n      AND a.device_code = ?\n      AND tc.capability_code = ?\n      AND tc.status_topic = ?\n      AND t.status = 'PENDING'\n      AND (\n          ? = 'FAILED'\n          OR UPPER(t.target_value) = ?\n      )\n`;\ndbMsg.payload = [\n    taskStatus,\n    taskId,\n    deviceCode,\n    capabilityCode,\n    mqttTopic,\n    taskStatus,\n    currentValue\n];\n\nconst dashboardMsg = {\n    topic: \"actuator_status\",\n    device_code: deviceCode,\n    capability_code: capabilityCode,\n    current_value: currentValue,\n    task_status: taskStatus,\n    task_id: taskId,\n    reported_at: reportedAt,\n    error_code: data.error_code || null,\n    message: data.message || null\n};\n\nreturn [dbMsg, dashboardMsg, null];",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 460,
+        "wires": [
+            [
+                "bbdecef2ab9fbc27"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "bbdecef2ab9fbc27",
+        "type": "mysql",
+        "z": "8342e9099a477a03",
+        "mydb": "e0c5f134542ac77e",
+        "name": "update task",
+        "x": 450,
+        "y": 600,
+        "wires": [
+            [
+                "37ac688d3c243d7c",
+                "9890796f5432d275"
+            ]
+        ]
+    },
+    {
+        "id": "37ac688d3c243d7c",
+        "type": "function",
+        "z": "8342e9099a477a03",
+        "name": "check task update",
+        "func": "const result = msg.payload;\nconst status = msg.actuator_status;\nconst affectedRows = result && result.affectedRows !== undefined\n    ? Number(result.affectedRows)\n    : 0;\n\nif (affectedRows === 1) {\n    msg.payload = {\n        success: true,\n        task_id: status.task_id,\n        device_code: status.device_code,\n        current_value: status.current_value,\n        status: status.status\n    };\n    return [msg, null];\n}\n\nmsg.payload = {\n    success: false,\n    message: \"Không cập nhật được task\",\n    possible_reasons: [\n        \"task_id không tồn tại\",\n        \"task đã COMPLETED hoặc FAILED\",\n        \"device_code không đúng\",\n        \"capability_code không đúng\",\n        \"status_topic không đúng\",\n        \"current_value khác target_value\"\n    ],\n    actuator_status: status\n};\nreturn [null, msg];",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 690,
+        "y": 600,
+        "wires": [
+            [
+                "dfe4bbbaf75464db",
+                "48a1b510160c33e5"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "dc9a70f5476bd445",
+        "type": "inject",
+        "z": "8342e9099a477a03",
+        "name": "Test pump",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "actuator/MIST_PUMP_01/status",
+        "payload": "{\"task_id\":37,\"device_code\":\"MIST_PUMP_01\",\"capability_code\":\"ON_OFF\",\"current_value\":\"OFF\",\"status\":\"COMPLETED\",\"reported_at\":\"2026-07-14T20:35:02+07:00\"}",
+        "payloadType": "str",
+        "x": 180,
+        "y": 500,
+        "wires": [
+            [
+                "975421a701e9f5c0"
+            ]
+        ]
+    },
+    {
+        "id": "dfe4bbbaf75464db",
+        "type": "debug",
+        "z": "8342e9099a477a03",
+        "name": "check update debug",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 920,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "9890796f5432d275",
+        "type": "debug",
+        "z": "8342e9099a477a03",
+        "name": "check sql update task",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 590,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "19c8eb49df2bea3d",
+        "type": "link in",
+        "z": "8342e9099a477a03",
+        "name": "Dashboard Command In",
+        "links": [
+            "2f94a516c7e8b390"
+        ],
+        "x": 305,
+        "y": 60,
+        "wires": [
+            [
+                "6bf3dad81c7490b2"
+            ]
+        ]
+    },
+    {
+        "id": "48a1b510160c33e5",
+        "type": "link out",
+        "z": "8342e9099a477a03",
+        "name": "actuator status",
+        "mode": "link",
+        "links": [
+            "63d8e95a0b2cf7d4"
+        ],
+        "x": 835,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "4a063c7428037cb8",
+        "type": "inject",
+        "z": "8342e9099a477a03",
+        "name": "Test fan",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "actuator/VENT_FAN_01/status",
+        "payload": "{   \"task_id\": 24,   \"device_code\": \"VENT_FAN_01\",   \"capability_code\": \"ON_OFF\",   \"current_value\": \"OFF\",   \"status\": \"COMPLETED\",   \"reported_at\": \"2026-07-15T13:35:00+07:00\" }",
+        "payloadType": "str",
+        "x": 170,
+        "y": 560,
+        "wires": [
+            [
+                "975421a701e9f5c0"
+            ]
+        ]
+    },
+    {
+        "id": "863cad992a2111dd",
+        "type": "inject",
+        "z": "8342e9099a477a03",
+        "name": "Test light",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "actuator/GROW_LIGHT_01/status",
+        "payload": "{   \"task_id\": 25,   \"device_code\": \"GROW_LIGHT_01\",   \"capability_code\": \"ON_OFF\",   \"current_value\": \"OFF\",   \"status\": \"COMPLETED\",   \"reported_at\": \"2026-07-15T13:36:00+07:00\" }",
+        "payloadType": "str",
+        "x": 180,
+        "y": 620,
+        "wires": [
+            [
+                "975421a701e9f5c0"
+            ]
+        ]
+    },
+    {
+        "id": "1e839405b6d7a28f",
+        "type": "function",
+        "z": "a71c2d9e4f603b18",
+        "name": "prepare dashboard command",
+        "func": "const command = msg.payload || {};\n\nconst deviceCode = String(\n    command.device_code || \"\"\n).trim();\n\nconst targetState = String(\n    command.target_state || \"\"\n).toUpperCase();\n\nconst validDevices = [\n    \"MIST_PUMP_01\",\n    \"VENT_FAN_01\",\n    \"GROW_LIGHT_01\"\n];\n\nif (!validDevices.includes(deviceCode)) {\n    node.error(\"device_code không hợp lệ\", msg);\n    return null;\n}\n\nif (![\"ON\", \"OFF\"].includes(targetState)) {\n    node.error(\"target_state phải là ON hoặc OFF\", msg);\n    return null;\n}\n\nmsg.payload = {\n    device_code: deviceCode,\n    capability_code: \"ON_OFF\",\n    target_state: targetState,\n    source: command.source || \"USER\"\n};\n\nreturn msg;",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 260,
+        "wires": [
+            [
+                "2f94a516c7e8b390"
+            ],
+            [
+                "41b6c738e90ad5b2"
+            ]
+        ]
+    },
+    {
+        "id": "2f94a516c7e8b390",
+        "type": "link out",
+        "z": "a71c2d9e4f603b18",
+        "name": "Dashboard Command",
+        "mode": "link",
+        "links": [
+            "19c8eb49df2bea3d"
+        ],
+        "x": 715,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "63d8e95a0b2cf7d4",
+        "type": "link in",
+        "z": "a71c2d9e4f603b18",
+        "name": "Actuator Status In",
+        "links": [
+            "48a1b510160c33e5"
+        ],
+        "x": 285,
+        "y": 560,
+        "wires": [
+            [
+                "41b6c738e90ad5b2"
+            ]
+        ]
+    },
+    {
+        "id": "41b6c738e90ad5b2",
+        "type": "function",
+        "z": "a71c2d9e4f603b18",
+        "name": "format and route actuator status",
+        "func": "const data = msg.payload || {};\n\nconst deviceCode = String(data.device_code || \"\").trim();\n\nconst currentValue = String(\n    data.current_value ||\n    data.state ||\n    \"OFF\"\n).toUpperCase();\n\nconst taskStatus = String(\n    data.status ||\n    \"COMPLETED\"\n).toUpperCase();\n\nconst reportedAt =\n    data.reported_at ||\n    new Date().toLocaleString(\"vi-VN\");\n\nconst cardMessage = {\n    payload: {\n        task_id: data.task_id,\n        device_code: deviceCode,\n        capability_code: data.capability_code || \"ON_OFF\",\n        current_value: currentValue,\n        status: taskStatus,\n        reported_at: reportedAt\n    }\n};\n\nconst latestMessage = {\n    payload:\n        `${deviceCode} | ` +\n        `${currentValue} | ` +\n        `${taskStatus} | ` +\n        `${reportedAt}`\n};\n\nlet pumpOutput = null;\nlet fanOutput = null;\nlet lightOutput = null;\n\nswitch (deviceCode) {\n    case \"MIST_PUMP_01\":\n        pumpOutput = cardMessage;\n        break;\n\n    case \"VENT_FAN_01\":\n        fanOutput = cardMessage;\n        break;\n\n    case \"GROW_LIGHT_01\":\n        lightOutput = cardMessage;\n        break;\n\n    default:\n        node.warn({\n            message: \"Không xác định được actuator\",\n            device_code: deviceCode,\n            payload: data\n        });\n\n        return null;\n}\n\nreturn [\n    pumpOutput,\n    fanOutput,\n    lightOutput,\n    latestMessage\n];",
+        "outputs": 4,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 510,
+        "y": 540,
+        "wires": [
+            [
+                "d6560befad9a1cd2"
+            ],
+            [
+                "c4aabeaefd6cd964"
+            ],
+            [
+                "7d8dba0d5ac503cd",
+                "9069097f6d3e043f"
+            ],
+            [
+                "4444444444444441"
+            ]
+        ]
+    },
+    {
+        "id": "eb5061d283ae7f5c",
+        "type": "inject",
+        "z": "a71c2d9e4f603b18",
+        "name": "load task history on deploy",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "15",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "2",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 760,
+        "wires": [
+            [
+                "c93e4fb0618c5d3a"
+            ]
+        ]
+    },
+    {
+        "id": "c93e4fb0618c5d3a",
+        "type": "function",
+        "z": "a71c2d9e4f603b18",
+        "name": "query recent tasks",
+        "func": "msg.topic = `\n    SELECT\n        t.id AS task_id,\n        a.name AS thiet_bi,\n        a.device_code,\n        t.target_value AS lenh,\n        t.source AS nguon,\n        t.status AS trang_thai,\n        DATE_FORMAT(t.created_at, '%d/%m/%Y %H:%i:%s') AS tao_luc,\n        COALESCE(DATE_FORMAT(t.completed_at, '%d/%m/%Y %H:%i:%s'), '') AS hoan_thanh_luc\n    FROM task AS t\n    INNER JOIN tasking_capability AS tc\n        ON tc.id = t.tasking_capability_id\n    INNER JOIN actuator AS a\n        ON a.id = tc.actuator_id\n    ORDER BY t.id DESC\n    LIMIT 5\n`;\nmsg.payload = [];\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 760,
+        "wires": [
+            [
+                "da4f50c1729d6e4b"
+            ]
+        ]
+    },
+    {
+        "id": "da4f50c1729d6e4b",
+        "type": "mysql",
+        "z": "a71c2d9e4f603b18",
+        "mydb": "e0c5f134542ac77e",
+        "name": "load recent tasks",
+        "x": 630,
+        "y": 760,
+        "wires": [
+            [
+                "399496121cbfe969"
+            ]
+        ]
+    },
+    {
+        "id": "399496121cbfe969",
+        "type": "function",
+        "z": "a71c2d9e4f603b18",
+        "name": "format for table",
+        "func": "if (!Array.isArray(msg.payload)) {\n    node.warn(\"Dữ liệu gửi vào table không phải mảng\");\n    return null;\n}\n\nmsg.payload = msg.payload.map(row => ({\n    task_id: row.task_id,\n    thiet_bi: row.thiet_bi,\n    device_code: row.device_code,\n    lenh: row.lenh,\n    nguon: row.nguon,\n    trang_thai: row.trang_thai,\n    tao_luc: row.tao_luc,\n    hoan_thanh_luc: row.hoan_thanh_luc || \"\"\n}));\n\nmsg.class = \"recent-task-table\";\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 920,
+        "y": 760,
+        "wires": [
+            [
+                "e7b7dace12704f85",
+                "d658a1bcf2a3b86a"
+            ]
+        ]
+    },
+    {
+        "id": "e7b7dace12704f85",
+        "type": "debug",
+        "z": "a71c2d9e4f603b18",
+        "name": "check data format",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1180,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "d658a1bcf2a3b86a",
+        "type": "ui-table",
+        "z": "a71c2d9e4f603b18",
+        "group": "0d7283f4a5c6917e",
+        "name": "Lệnh gần đây",
+        "label": "",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "maxrows": 0,
+        "passthru": false,
+        "autocols": false,
+        "showSearch": false,
+        "deselect": true,
+        "selectionType": "none",
+        "columns": [
+            {
+                "title": "Mã lệnh",
+                "key": "task_id",
+                "keyType": "key",
+                "type": "text",
+                "width": "",
+                "align": "center"
+            },
+            {
+                "title": "Thiết bị",
+                "key": "thiet_bi",
+                "keyType": "key",
+                "type": "text",
+                "width": "",
+                "align": "start"
+            },
+            {
+                "title": "Mã thiết bị",
+                "key": "device_code",
+                "keyType": "key",
+                "type": "text",
+                "width": "",
+                "align": "start"
+            },
+            {
+                "title": "Lệnh",
+                "key": "lenh",
+                "keyType": "key",
+                "type": "text",
+                "width": "",
+                "align": "center"
+            },
+            {
+                "title": "Tác nhân",
+                "key": "nguon",
+                "keyType": "key",
+                "type": "text",
+                "width": "",
+                "align": "start"
+            },
+            {
+                "title": "Trạng thái",
+                "key": "trang_thai",
+                "keyType": "key",
+                "type": "text",
+                "width": "",
+                "align": "center"
+            },
+            {
+                "title": "Thời gian tạo",
+                "key": "tao_luc",
+                "keyType": "key",
+                "type": "text",
+                "width": "",
+                "align": "start"
+            }
+        ],
+        "mobileBreakpoint": "sm",
+        "mobileBreakpointType": "defaults",
+        "action": "replace",
+        "className": "",
+        "x": 1180,
+        "y": 760,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c366cc8e794e978b",
+        "type": "ui-template",
+        "z": "a71c2d9e4f603b18",
+        "group": "",
+        "page": "b82d3eaf50714c29",
+        "ui": "",
+        "name": "",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "head": "",
+        "format": ".recent-task-table .v-table__wrapper table thead tr th {\n    background-color: #6b7280 !important;\n    color: #ffffff !important;\n    font-weight: 700 !important;\n    text-align: center !important;\n}\n\n.recent-task-table .v-table__wrapper table thead tr th * {\n    color: #ffffff !important;\n    font-weight: 700 !important;\n}",
+        "storeOutMessages": true,
+        "passthru": true,
+        "resendOnRefresh": true,
+        "templateScope": "page:style",
+        "className": "",
+        "x": 910,
+        "y": 860,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c4aabeaefd6cd964",
+        "type": "ui-template",
+        "z": "a71c2d9e4f603b18",
+        "group": "5b709ef0a74aa222",
+        "page": "",
+        "ui": "",
+        "name": "Card quạt",
+        "order": 2,
+        "width": "4",
+        "height": "4",
+        "head": "",
+        "format": "<template>\n    <div class=\"device-card\">\n        <div class=\"card-header\">\n            <div>\n                <div class=\"device-code\">\n                    {{ deviceCode }}\n                </div>\n\n                <div class=\"device-name\">\n                    {{ deviceName }}\n                </div>\n            </div>\n\n            <div\n                class=\"state-badge\"\n                :class=\"deviceState === 'ON' ? 'state-on' : 'state-off'\"\n            >\n                <span class=\"state-dot\"></span>\n                {{ deviceState }}\n            </div>\n        </div>\n\n        <div class=\"device-info\">\n            Cập nhật gần nhất: {{ lastUpdated }}\n        </div>\n\n        <div\n            class=\"connection-status\"\n            :class=\"hasResponse ? 'connected' : 'not-connected'\"\n        >\n            <span class=\"connection-dot\"></span>\n            {{ hasResponse ? \"Đã nhận phản hồi\" : \"Chưa có phản hồi\" }}\n        </div>\n\n        <div class=\"button-row\">\n            <button\n                class=\"device-button\"\n                :class=\"{ 'active-on': deviceState === 'OFF' }\"\n                :disabled=\"deviceState === 'ON' || isPending\"\n                @click=\"sendCommand('ON')\"\n            >\n                Bật\n            </button>\n\n            <button\n                class=\"device-button\"\n                :class=\"{ 'active-off': deviceState === 'ON' }\"\n                :disabled=\"deviceState === 'OFF' || isPending\"\n                @click=\"sendCommand('OFF')\"\n            >\n                Tắt\n            </button>\n        </div>\n\n        <div v-if=\"isPending\" class=\"pending-message\">\n            Đang chờ thiết bị phản hồi...\n        </div>\n\n        <div v-if=\"taskFailed\" class=\"failed-message\">\n            Lệnh gần nhất thực hiện thất bại\n        </div>\n    </div>\n</template>\n\n<script>\nexport default {\n    data() {\n        return {\n            deviceCode: \"VENT_FAN_01\",\n            deviceName: \"Quạt thông gió\"\n        }\n    },\n\n    computed: {\n        deviceState() {\n            const value =\n                this.msg?.payload?.current_value ??\n                this.msg?.payload?.state ??\n                \"OFF\"\n\n            return String(value).toUpperCase()\n        },\n\n        taskStatus() {\n            return String(\n                this.msg?.payload?.status ?? \"\"\n            ).toUpperCase()\n        },\n\n        isPending() {\n            return this.taskStatus === \"PENDING\"\n        },\n\n        taskFailed() {\n            return this.taskStatus === \"FAILED\"\n        },\n\n        lastUpdated() {\n            return (\n                this.msg?.payload?.reported_at ??\n                this.msg?.payload?.updated_at ??\n                \"Chưa có dữ liệu\"\n            )\n        },\n\n        hasResponse() {\n            return Boolean(\n                this.msg?.payload?.reported_at ||\n                this.msg?.payload?.updated_at\n            )\n        }\n    },\n\n    methods: {\n        sendCommand(targetState) {\n            this.send({\n                payload: {\n                    device_code: this.deviceCode,\n                    capability_code: \"ON_OFF\",\n                    target_state: targetState,\n                    source: \"USER\"\n                }\n            })\n        }\n    }\n}\n</script>\n\n<style>\n.device-card {\n    width: 100%;\n    min-height: 190px;\n    box-sizing: border-box;\n    padding: 18px;\n    background: #ffffff;\n    border: 1px solid #e5e7eb;\n    border-radius: 12px;\n    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);\n}\n\n.card-header {\n    display: flex;\n    justify-content: space-between;\n    align-items: flex-start;\n    gap: 12px;\n}\n\n.device-code {\n    color: #6b7280;\n    font-size: 12px;\n    font-weight: 600;\n}\n\n.device-name {\n    margin-top: 4px;\n    color: #202124;\n    font-size: 20px;\n    font-weight: 700;\n}\n\n.state-badge {\n    display: inline-flex;\n    align-items: center;\n    gap: 5px;\n    padding: 5px 9px;\n    border-radius: 7px;\n    font-size: 12px;\n    font-weight: 700;\n}\n\n.state-dot,\n.connection-dot {\n    width: 7px;\n    height: 7px;\n    border-radius: 50%;\n    background: currentColor;\n}\n\n.state-on {\n    color: #16803c;\n    background: #dcf4e5;\n}\n\n.state-off {\n    color: #b42318;\n    background: #fee4e2;\n}\n\n.device-info {\n    margin-top: 12px;\n    color: #80868b;\n    font-size: 13px;\n}\n\n.connection-status {\n    display: flex;\n    align-items: center;\n    gap: 6px;\n    margin-top: 7px;\n    font-size: 12px;\n    font-weight: 600;\n}\n\n.connected {\n    color: #16803c;\n}\n\n.not-connected {\n    color: #9ca3af;\n}\n\n.button-row {\n    display: grid;\n    grid-template-columns: 1fr 1fr;\n    gap: 10px;\n    margin-top: 20px;\n}\n\n.device-button {\n    min-height: 42px;\n    border: 1px solid #d1d5db;\n    border-radius: 9px;\n    background: #ffffff;\n    color: #303134;\n    font-size: 15px;\n    font-weight: 700;\n    cursor: pointer;\n}\n\n.device-button:hover:not(:disabled) {\n    background: #f3f4f6;\n}\n\n.device-button:disabled {\n    border-color: #eeeeee;\n    background: #f3f4f6;\n    color: #a4a7ab;\n    cursor: not-allowed;\n}\n\n.active-on {\n    border-color: #86c99b;\n}\n\n.active-off {\n    border-color: #e7a19c;\n}\n\n.pending-message {\n    margin-top: 9px;\n    color: #b26a00;\n    font-size: 12px;\n    text-align: center;\n}\n\n.failed-message {\n    margin-top: 9px;\n    color: #b42318;\n    font-size: 12px;\n    text-align: center;\n}\n</style>",
+        "storeOutMessages": true,
+        "passthru": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 540,
+        "y": 400,
+        "wires": [
+            [
+                "1e839405b6d7a28f"
+            ]
+        ]
+    },
+    {
+        "id": "7d8dba0d5ac503cd",
+        "type": "ui-template",
+        "z": "a71c2d9e4f603b18",
+        "group": "5b709ef0a74aa222",
+        "page": "",
+        "ui": "",
+        "name": "Card đèn",
+        "order": 3,
+        "width": "4",
+        "height": "4",
+        "head": "",
+        "format": "<template>\n    <div class=\"device-card\">\n        <div class=\"card-header\">\n            <div>\n                <div class=\"device-code\">\n                    {{ deviceCode }}\n                </div>\n\n                <div class=\"device-name\">\n                    {{ deviceName }}\n                </div>\n            </div>\n\n            <div\n                class=\"state-badge\"\n                :class=\"deviceState === 'ON' ? 'state-on' : 'state-off'\"\n            >\n                <span class=\"state-dot\"></span>\n                {{ deviceState }}\n            </div>\n        </div>\n\n        <div class=\"device-info\">\n            Cập nhật gần nhất: {{ lastUpdated }}\n        </div>\n\n        <div\n            class=\"connection-status\"\n            :class=\"hasResponse ? 'connected' : 'not-connected'\"\n        >\n            <span class=\"connection-dot\"></span>\n            {{ hasResponse ? \"Đã nhận phản hồi\" : \"Chưa có phản hồi\" }}\n        </div>\n\n        <div class=\"button-row\">\n            <button\n                class=\"device-button\"\n                :class=\"{ 'active-on': deviceState === 'OFF' }\"\n                :disabled=\"deviceState === 'ON' || isPending\"\n                @click=\"sendCommand('ON')\"\n            >\n                Bật\n            </button>\n\n            <button\n                class=\"device-button\"\n                :class=\"{ 'active-off': deviceState === 'ON' }\"\n                :disabled=\"deviceState === 'OFF' || isPending\"\n                @click=\"sendCommand('OFF')\"\n            >\n                Tắt\n            </button>\n        </div>\n\n        <div v-if=\"isPending\" class=\"pending-message\">\n            Đang chờ thiết bị phản hồi...\n        </div>\n\n        <div v-if=\"taskFailed\" class=\"failed-message\">\n            Lệnh gần nhất thực hiện thất bại\n        </div>\n    </div>\n</template>\n\n<script>\nexport default {\n    data() {\n        return {\n            deviceCode: \"GROW_LIGHT_01\",\n            deviceName: \"Đèn trồng nấm\"\n        }\n    },\n\n    computed: {\n        deviceState() {\n            const value =\n                this.msg?.payload?.current_value ??\n                this.msg?.payload?.state ??\n                \"OFF\"\n\n            return String(value).toUpperCase()\n        },\n\n        taskStatus() {\n            return String(\n                this.msg?.payload?.status ?? \"\"\n            ).toUpperCase()\n        },\n\n        isPending() {\n            return this.taskStatus === \"PENDING\"\n        },\n\n        taskFailed() {\n            return this.taskStatus === \"FAILED\"\n        },\n\n        lastUpdated() {\n            return (\n                this.msg?.payload?.reported_at ??\n                this.msg?.payload?.updated_at ??\n                \"Chưa có dữ liệu\"\n            )\n        },\n\n        hasResponse() {\n            return Boolean(\n                this.msg?.payload?.reported_at ||\n                this.msg?.payload?.updated_at\n            )\n        }\n    },\n\n    methods: {\n        sendCommand(targetState) {\n            this.send({\n                payload: {\n                    device_code: this.deviceCode,\n                    capability_code: \"ON_OFF\",\n                    target_state: targetState,\n                    source: \"USER\"\n                }\n            })\n        }\n    }\n}\n</script>\n\n<style>\n.device-card {\n    width: 100%;\n    min-height: 190px;\n    box-sizing: border-box;\n    padding: 18px;\n    background: #ffffff;\n    border: 1px solid #e5e7eb;\n    border-radius: 12px;\n    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);\n}\n\n.card-header {\n    display: flex;\n    justify-content: space-between;\n    align-items: flex-start;\n    gap: 12px;\n}\n\n.device-code {\n    color: #6b7280;\n    font-size: 12px;\n    font-weight: 600;\n}\n\n.device-name {\n    margin-top: 4px;\n    color: #202124;\n    font-size: 20px;\n    font-weight: 700;\n}\n\n.state-badge {\n    display: inline-flex;\n    align-items: center;\n    gap: 5px;\n    padding: 5px 9px;\n    border-radius: 7px;\n    font-size: 12px;\n    font-weight: 700;\n}\n\n.state-dot,\n.connection-dot {\n    width: 7px;\n    height: 7px;\n    border-radius: 50%;\n    background: currentColor;\n}\n\n.state-on {\n    color: #16803c;\n    background: #dcf4e5;\n}\n\n.state-off {\n    color: #b42318;\n    background: #fee4e2;\n}\n\n.device-info {\n    margin-top: 12px;\n    color: #80868b;\n    font-size: 13px;\n}\n\n.connection-status {\n    display: flex;\n    align-items: center;\n    gap: 6px;\n    margin-top: 7px;\n    font-size: 12px;\n    font-weight: 600;\n}\n\n.connected {\n    color: #16803c;\n}\n\n.not-connected {\n    color: #9ca3af;\n}\n\n.button-row {\n    display: grid;\n    grid-template-columns: 1fr 1fr;\n    gap: 10px;\n    margin-top: 20px;\n}\n\n.device-button {\n    min-height: 42px;\n    border: 1px solid #d1d5db;\n    border-radius: 9px;\n    background: #ffffff;\n    color: #303134;\n    font-size: 15px;\n    font-weight: 700;\n    cursor: pointer;\n}\n\n.device-button:hover:not(:disabled) {\n    background: #f3f4f6;\n}\n\n.device-button:disabled {\n    border-color: #eeeeee;\n    background: #f3f4f6;\n    color: #a4a7ab;\n    cursor: not-allowed;\n}\n\n.active-on {\n    border-color: #86c99b;\n}\n\n.active-off {\n    border-color: #e7a19c;\n}\n\n.pending-message {\n    margin-top: 9px;\n    color: #b26a00;\n    font-size: 12px;\n    text-align: center;\n}\n\n.failed-message {\n    margin-top: 9px;\n    color: #b42318;\n    font-size: 12px;\n    text-align: center;\n}\n</style>",
+        "storeOutMessages": true,
+        "passthru": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 760,
+        "y": 400,
+        "wires": [
+            [
+                "1e839405b6d7a28f"
+            ]
+        ]
+    },
+    {
+        "id": "4444444444444441",
+        "type": "ui-text",
+        "z": "a71c2d9e4f603b18",
+        "group": "fc6172e394b5806d",
+        "order": 1,
+        "width": "12",
+        "height": "1",
+        "name": "Phản hồi gần nhất",
+        "label": "",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#717171",
+        "wrapText": true,
+        "className": "",
+        "value": "payload",
+        "valueType": "msg",
+        "x": 810,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "d6560befad9a1cd2",
+        "type": "ui-template",
+        "z": "a71c2d9e4f603b18",
+        "group": "5b709ef0a74aa222",
+        "page": "",
+        "ui": "",
+        "name": "Card máy phun sương",
+        "order": 1,
+        "width": "4",
+        "height": "4",
+        "head": "",
+        "format": "<template>\n    <div class=\"device-card\">\n        <div class=\"card-header\">\n            <div>\n                <div class=\"device-code\">\n                    {{ deviceCode }}\n                </div>\n\n                <div class=\"device-name\">\n                    {{ deviceName }}\n                </div>\n            </div>\n\n            <div class=\"state-badge\" :class=\"deviceState === 'ON' ? 'state-on' : 'state-off'\">\n                <span class=\"state-dot\"></span>\n                {{ deviceState }}\n            </div>\n        </div>\n\n        <div class=\"device-info\">\n            Cập nhật gần nhất: {{ lastUpdated }}\n        </div>\n\n        <div class=\"connection-status\" :class=\"hasResponse ? 'connected' : 'not-connected'\">\n            <span class=\"connection-dot\"></span>\n            {{ hasResponse ? \"Đã nhận phản hồi\" : \"Chưa có phản hồi\" }}\n        </div>\n\n        <div class=\"button-row\">\n            <button\n                class=\"device-button\"\n                :class=\"{ 'active-on': deviceState === 'OFF' }\"\n                :disabled=\"deviceState === 'ON' || isPending\"\n                @click=\"sendCommand('ON')\"\n            >\n                Bật\n            </button>\n\n            <button\n                class=\"device-button\"\n                :class=\"{ 'active-off': deviceState === 'ON' }\"\n                :disabled=\"deviceState === 'OFF' || isPending\"\n                @click=\"sendCommand('OFF')\"\n            >\n                Tắt\n            </button>\n        </div>\n\n        <div v-if=\"isPending\" class=\"pending-message\">\n            Đang chờ thiết bị phản hồi...\n        </div>\n\n        <div v-if=\"taskFailed\" class=\"failed-message\">\n            Lệnh gần nhất thực hiện thất bại\n        </div>\n    </div>\n</template>\n\n<script>\n    export default {\n    data() {\n        return {\n            deviceCode: \"MIST_PUMP_01\",\n            deviceName: \"Máy phun sương\"\n        }\n    },\n\n    computed: {\n        deviceState() {\n            const value =\n                this.msg?.payload?.current_value ??\n                this.msg?.payload?.state ??\n                \"OFF\"\n\n            return String(value).toUpperCase()\n        },\n\n        taskStatus() {\n            return String(\n                this.msg?.payload?.status ?? \"\"\n            ).toUpperCase()\n        },\n\n        isPending() {\n            return this.taskStatus === \"PENDING\"\n        },\n\n        taskFailed() {\n            return this.taskStatus === \"FAILED\"\n        },\n\n        lastUpdated() {\n            return (\n                this.msg?.payload?.reported_at ??\n                this.msg?.payload?.updated_at ??\n                \"Chưa có dữ liệu\"\n            )\n        },\n\n        hasResponse() {\n            return Boolean(\n                this.msg?.payload?.reported_at ||\n                this.msg?.payload?.updated_at\n            )\n        }\n    },\n\n    methods: {\n        sendCommand(targetState) {\n            this.send({\n                payload: {\n                    device_code: this.deviceCode,\n                    capability_code: \"ON_OFF\",\n                    target_state: targetState,\n                    source: \"USER\"\n                }\n            })\n        }\n    }\n}\n</script>\n\n<style>\n    .device-card {\n        width: 100%;\n        min-height: 190px;\n        box-sizing: border-box;\n        padding: 18px;\n        background: #ffffff;\n        border: 1px solid #e5e7eb;\n        border-radius: 12px;\n        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);\n    }\n\n    .card-header {\n        display: flex;\n        justify-content: space-between;\n        align-items: flex-start;\n        gap: 12px;\n    }\n\n    .device-code {\n        color: #6b7280;\n        font-size: 12px;\n        font-weight: 600;\n    }\n\n    .device-name {\n        margin-top: 4px;\n        color: #202124;\n        font-size: 20px;\n        font-weight: 700;\n    }\n\n    .state-badge {\n        display: inline-flex;\n        align-items: center;\n        gap: 5px;\n        padding: 5px 9px;\n        border-radius: 7px;\n        font-size: 12px;\n        font-weight: 700;\n    }\n\n    .state-dot,\n    .connection-dot {\n        width: 7px;\n        height: 7px;\n        flex-shrink: 0;\n        border-radius: 50%;\n        background: currentColor;\n    }\n\n    /* Trạng thái thiết bị đang bật */\n    .state-on {\n        color: #16803c;\n        background: #dcf4e5;\n    }\n\n    /* Trạng thái thiết bị đang tắt */\n    .state-off {\n        color: #b42318;\n        background: #fee4e2;\n    }\n\n    .device-info {\n        margin-top: 12px;\n        color: #80868b;\n        font-size: 13px;\n    }\n\n    .connection-status {\n        display: flex;\n        align-items: center;\n        gap: 6px;\n        margin-top: 7px;\n        font-size: 12px;\n        font-weight: 600;\n    }\n\n    .connected {\n        color: #16803c;\n    }\n\n    .not-connected {\n        color: #9ca3af;\n    }\n\n    .button-row {\n        display: grid;\n        grid-template-columns: 1fr 1fr;\n        gap: 10px;\n        margin-top: 20px;\n    }\n\n    /* Kiểu chung của nút */\n    .device-button {\n        min-height: 42px;\n        padding: 8px 12px;\n        border: 1px solid #d1d5db;\n        border-radius: 9px;\n        background: #ffffff;\n        color: #303134;\n        font-size: 15px;\n        font-weight: 700;\n        cursor: pointer;\n        transition:\n            background-color 0.2s ease,\n            border-color 0.2s ease,\n            color 0.2s ease,\n            transform 0.1s ease;\n    }\n\n    /* Hiệu ứng khi nhấn nút */\n    .device-button:active:not(:disabled) {\n        transform: scale(0.98);\n    }\n\n    /* Nút Bật có thể nhấn */\n    .device-button.active-on {\n        border-color: #16803c;\n        background: #16803c;\n        color: #ffffff;\n    }\n\n    .device-button.active-on:hover:not(:disabled) {\n        border-color: #126b33;\n        background: #126b33;\n        color: #ffffff;\n    }\n\n    /* Nút Tắt có thể nhấn */\n    .device-button.active-off {\n        border-color: #e7a19c;\n        background: #ffffff;\n        color: #b42318;\n    }\n\n    .device-button.active-off:hover:not(:disabled) {\n        border-color: #b42318;\n        background: #fee4e2;\n        color: #b42318;\n    }\n\n    /* Hover cho nút không có trạng thái màu */\n    .device-button:hover:not(:disabled):not(.active-on):not(.active-off) {\n        background: #f3f4f6;\n    }\n\n    /* Nút bị vô hiệu hóa */\n    .device-button:disabled {\n        border-color: #eeeeee;\n        background: #f3f4f6;\n        color: #a4a7ab;\n        cursor: not-allowed;\n        opacity: 1;\n    }\n\n    .pending-message {\n        margin-top: 9px;\n        color: #b26a00;\n        font-size: 12px;\n        font-weight: 600;\n        text-align: center;\n    }\n\n    .failed-message {\n        margin-top: 9px;\n        color: #b42318;\n        font-size: 12px;\n        font-weight: 600;\n        text-align: center;\n    }\n</style>",
+        "storeOutMessages": true,
+        "passthru": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 260,
+        "y": 400,
+        "wires": [
+            [
+                "1e839405b6d7a28f"
+            ]
+        ]
+    },
+    {
+        "id": "9069097f6d3e043f",
+        "type": "debug",
+        "z": "a71c2d9e4f603b18",
+        "name": "light task response",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 880,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "a100000000000018",
+        "type": "comment",
+        "z": "f0a1b2c3d4e5f601",
+        "name": "CẤU HÌNH SAU KHI IMPORT",
+        "info": "1) Cài @flowfuse/node-red-dashboard và node-red-node-mysql.\n2) Mở config MySQL 'iot_mushroom' và nhập user/password.\n3) Nếu MySQL chạy Docker, đổi Host từ 127.0.0.1 sang tên container hoặc host phù hợp.\n4) Dashboard độc lập ở /mushroom-dashboard/history. Muốn ghép vào dashboard hiện tại, sửa ui-page 'Lịch sử' để dùng ui-base hiện có.\n5) Flow tự nhận sensor mới nếu datastream.observed_property là temperature hoặc humidity; không cần thêm nhánh theo device_code.\n6) Khi dữ liệu lớn, có thể thêm index: CREATE INDEX idx_task_created_status ON task(created_at, status); và CREATE INDEX idx_datastream_property ON datastream(observed_property, sensor_id);",
+        "x": 250,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "a100000000000001",
+        "type": "inject",
+        "z": "f0a1b2c3d4e5f601",
+        "name": "Khởi tạo: 24 giờ",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.8,
+        "topic": "",
+        "payload": "24h",
+        "payloadType": "str",
+        "x": 240,
+        "y": 160,
+        "wires": [
+            [
+                "a100000000000003",
+                "a100000000000005"
+            ]
+        ]
+    },
+    {
+        "id": "a100000000000002",
+        "type": "inject",
+        "z": "f0a1b2c3d4e5f601",
+        "name": "Tự làm mới mỗi 5 phút",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "300",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "refresh",
+        "payloadType": "str",
+        "x": 210,
+        "y": 240,
+        "wires": [
+            [
+                "a100000000000005"
+            ]
+        ]
+    },
+    {
+        "id": "a100000000000003",
+        "type": "ui-dropdown",
+        "z": "f0a1b2c3d4e5f601",
+        "group": "c0ffee0000000010",
+        "name": "Chọn khoảng thời gian",
+        "label": "",
+        "tooltip": "Chọn khoảng dữ liệu cần tổng hợp",
+        "order": 1,
+        "width": "6",
+        "height": "1",
+        "passthru": false,
+        "multiple": false,
+        "chips": false,
+        "clearable": false,
+        "options": [
+            {
+                "label": "24 giờ gần nhất",
+                "value": "24h",
+                "type": "str"
+            },
+            {
+                "label": "7 ngày gần nhất",
+                "value": "7d",
+                "type": "str"
+            },
+            {
+                "label": "30 ngày gần nhất",
+                "value": "30d",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "history_period",
+        "topicType": "str",
+        "className": "",
+        "typeIsComboBox": false,
+        "msgTrigger": "onChange",
+        "x": 500,
+        "y": 80,
+        "wires": [
+            [
+                "a100000000000005"
+            ]
+        ]
+    },
+    {
+        "id": "a100000000000004",
+        "type": "ui-button",
+        "z": "f0a1b2c3d4e5f601",
+        "group": "c0ffee0000000010",
+        "name": "Làm mới lịch sử",
+        "label": "Làm mới",
+        "order": 2,
+        "width": "1",
+        "height": "1",
+        "emulateClick": false,
+        "tooltip": "Truy vấn lại dữ liệu từ MySQL",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "refresh",
+        "iconPosition": "left",
+        "payload": "refresh",
+        "payloadType": "str",
+        "topic": "",
+        "topicType": "str",
+        "buttonColor": "",
+        "textColor": "",
+        "iconColor": "",
+        "enableClick": true,
+        "enablePointerdown": false,
+        "pointerdownPayload": "",
+        "pointerdownPayloadType": "str",
+        "enablePointerup": false,
+        "pointerupPayload": "",
+        "pointerupPayloadType": "str",
+        "x": 420,
+        "y": 300,
+        "wires": [
+            [
+                "a100000000000005"
+            ]
+        ]
+    },
+    {
+        "id": "a100000000000005",
+        "type": "function",
+        "z": "f0a1b2c3d4e5f601",
+        "name": "Tạo 4 truy vấn lịch sử",
+        "func": "const periods = {\n    \"24h\": { hours: 24, bucketSeconds: 10 * 60, label: \"24 giờ gần nhất\" },\n    \"7d\":  { hours: 7 * 24, bucketSeconds: 60 * 60, label: \"7 ngày gần nhất\" },\n    \"30d\": { hours: 30 * 24, bucketSeconds: 6 * 60 * 60, label: \"30 ngày gần nhất\" },\n    \"90d\": { hours: 90 * 24, bucketSeconds: 24 * 60 * 60, label: \"90 ngày gần nhất\" }\n};\n\nlet periodKey = String(msg.payload || \"\");\nif (periods[periodKey]) {\n    flow.set(\"history_period\", periodKey);\n} else {\n    periodKey = flow.get(\"history_period\") || \"24h\";\n}\n\nconst period = periods[periodKey] || periods[\"24h\"];\nconst common = {\n    period_key: periodKey,\n    period_label: period.label,\n    query_started_at: Date.now()\n};\n\nconst sensorStats = {\n    ...common,\n    topic: `\n        SELECT\n            ROUND(AVG(CASE WHEN property_name = 'temperature' THEN avg_value END), 2) AS avg_temperature,\n            ROUND(AVG(CASE WHEN property_name = 'humidity' THEN avg_value END), 2) AS avg_humidity,\n            COALESCE(SUM(CASE WHEN property_name = 'temperature' THEN sample_count ELSE 0 END), 0) AS temperature_samples,\n            COALESCE(SUM(CASE WHEN property_name = 'humidity' THEN sample_count ELSE 0 END), 0) AS humidity_samples,\n            COUNT(DISTINCT CASE WHEN property_name = 'temperature' THEN device_code END) AS temperature_sensors,\n            COUNT(DISTINCT CASE WHEN property_name = 'humidity' THEN device_code END) AS humidity_sensors\n        FROM (\n            SELECT\n                s.device_code,\n                LOWER(d.observed_property) AS property_name,\n                AVG(o.value) AS avg_value,\n                COUNT(*) AS sample_count\n            FROM observation AS o\n            INNER JOIN datastream AS d ON d.id = o.datastream_id\n            INNER JOIN sensor AS s ON s.id = d.sensor_id\n            WHERE o.observed_at >= DATE_SUB(NOW(), INTERVAL ? HOUR)\n              AND LOWER(d.observed_property) IN ('temperature', 'humidity')\n            GROUP BY s.device_code, LOWER(d.observed_property)\n        ) AS sensor_period_stats\n    `,\n    payload: [period.hours]\n};\n\nconst taskStats = {\n    ...common,\n    topic: `\n        SELECT\n            COALESCE(SUM(CASE WHEN t.status = 'COMPLETED' THEN 1 ELSE 0 END), 0) AS completed_tasks,\n            COUNT(*) AS total_tasks\n        FROM task AS t\n        WHERE t.created_at >= DATE_SUB(NOW(), INTERVAL ? HOUR)\n    `,\n    payload: [period.hours]\n};\n\nconst temperatureHistory = {\n    ...common,\n    topic: `\n        SELECT\n            s.device_code,\n            CAST(UNIX_TIMESTAMP(MIN(o.observed_at)) * 1000 AS UNSIGNED) AS time,\n            ROUND(AVG(o.value), 2) AS value\n        FROM observation AS o\n        INNER JOIN datastream AS d ON d.id = o.datastream_id\n        INNER JOIN sensor AS s ON s.id = d.sensor_id\n        WHERE LOWER(d.observed_property) = 'temperature'\n          AND o.observed_at >= DATE_SUB(NOW(), INTERVAL ? HOUR)\n        GROUP BY\n            s.device_code,\n            FLOOR(UNIX_TIMESTAMP(o.observed_at) / ?)\n        ORDER BY time ASC, s.device_code ASC\n    `,\n    payload: [period.hours, period.bucketSeconds]\n};\n\nconst humidityHistory = {\n    ...common,\n    topic: `\n        SELECT\n            s.device_code,\n            CAST(UNIX_TIMESTAMP(MIN(o.observed_at)) * 1000 AS UNSIGNED) AS time,\n            ROUND(AVG(o.value), 2) AS value\n        FROM observation AS o\n        INNER JOIN datastream AS d ON d.id = o.datastream_id\n        INNER JOIN sensor AS s ON s.id = d.sensor_id\n        WHERE LOWER(d.observed_property) = 'humidity'\n          AND o.observed_at >= DATE_SUB(NOW(), INTERVAL ? HOUR)\n        GROUP BY\n            s.device_code,\n            FLOOR(UNIX_TIMESTAMP(o.observed_at) / ?)\n        ORDER BY time ASC, s.device_code ASC\n    `,\n    payload: [period.hours, period.bucketSeconds]\n};\n\nreturn [sensorStats, taskStats, temperatureHistory, humidityHistory];",
+        "outputs": 4,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 690,
+        "y": 170,
+        "wires": [
+            [
+                "a100000000000006"
+            ],
+            [
+                "a100000000000007"
+            ],
+            [
+                "a100000000000008"
+            ],
+            [
+                "a100000000000009"
+            ]
+        ]
+    },
+    {
+        "id": "a100000000000006",
+        "type": "mysql",
+        "z": "f0a1b2c3d4e5f601",
+        "mydb": "e0c5f134542ac77e",
+        "name": "SQL: trung bình sensor",
+        "x": 980,
+        "y": 100,
+        "wires": [
+            [
+                "a10000000000000a"
+            ]
+        ]
+    },
+    {
+        "id": "a100000000000007",
+        "type": "mysql",
+        "z": "f0a1b2c3d4e5f601",
+        "mydb": "e0c5f134542ac77e",
+        "name": "SQL: thống kê task",
+        "x": 970,
+        "y": 150,
+        "wires": [
+            [
+                "a10000000000000b"
+            ]
+        ]
+    },
+    {
+        "id": "a100000000000008",
+        "type": "mysql",
+        "z": "f0a1b2c3d4e5f601",
+        "mydb": "e0c5f134542ac77e",
+        "name": "SQL: lịch sử nhiệt độ",
+        "x": 980,
+        "y": 200,
+        "wires": [
+            [
+                "a10000000000000c"
+            ]
+        ]
+    },
+    {
+        "id": "a100000000000009",
+        "type": "mysql",
+        "z": "f0a1b2c3d4e5f601",
+        "mydb": "e0c5f134542ac77e",
+        "name": "SQL: lịch sử độ ẩm",
+        "x": 970,
+        "y": 250,
+        "wires": [
+            [
+                "a10000000000000d"
+            ]
+        ]
+    },
+    {
+        "id": "a10000000000000a",
+        "type": "function",
+        "z": "f0a1b2c3d4e5f601",
+        "name": "Định dạng trung bình",
+        "func": "const row = Array.isArray(msg.payload) && msg.payload.length ? msg.payload[0] : {};\n\nfunction metric(value, suffix) {\n    if (value === null || value === undefined || value === \"\") return \"—\";\n    const number = Number(value);\n    return Number.isFinite(number) ? `${number.toFixed(2)} ${suffix}` : \"—\";\n}\n\nconst temperature = { ...msg, payload: metric(row.avg_temperature, \"°C\") };\nconst humidity = { ...msg, payload: metric(row.avg_humidity, \"%\") };\n\nconst tempSamples = Number(row.temperature_samples || 0);\nconst humSamples = Number(row.humidity_samples || 0);\nconst tempSensors = Number(row.temperature_sensors || 0);\nconst humSensors = Number(row.humidity_sensors || 0);\nconst updatedAt = new Date().toLocaleString(\"vi-VN\", {\n    timeZone: \"Asia/Ho_Chi_Minh\",\n    hour12: false\n});\n\nconst status = {\n    ...msg,\n    payload: `Đã tải ${msg.period_label || \"dữ liệu lịch sử\"} • ${tempSensors}/${humSensors} sensor nhiệt độ/độ ẩm • ${tempSamples + humSamples} mẫu • ${updatedAt}`\n};\n\nreturn [temperature, humidity, status];",
+        "outputs": 3,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1240,
+        "y": 100,
+        "wires": [
+            [
+                "a10000000000000e"
+            ],
+            [
+                "a10000000000000f"
+            ],
+            [
+                "a100000000000012"
+            ]
+        ]
+    },
+    {
+        "id": "a10000000000000b",
+        "type": "function",
+        "z": "f0a1b2c3d4e5f601",
+        "name": "Định dạng số task",
+        "func": "const row = Array.isArray(msg.payload) && msg.payload.length ? msg.payload[0] : {};\nconst completed = Number(row.completed_tasks || 0);\nconst total = Number(row.total_tasks || 0);\nreturn [\n    { ...msg, payload: completed },\n    { ...msg, payload: total }\n];",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1230,
+        "y": 150,
+        "wires": [
+            [
+                "a100000000000010"
+            ],
+            [
+                "a100000000000011"
+            ]
+        ]
+    },
+    {
+        "id": "a10000000000000c",
+        "type": "function",
+        "z": "f0a1b2c3d4e5f601",
+        "name": "Chuẩn hóa chart nhiệt độ",
+        "func": "const rows = Array.isArray(msg.payload) ? msg.payload : [];\nmsg.payload = rows\n    .map(row => ({\n        device_code: String(row.device_code || \"UNKNOWN_SENSOR\"),\n        time: Number(row.time),\n        value: Number(row.value)\n    }))\n    .filter(row => Number.isFinite(row.time) && Number.isFinite(row.value));\nmsg.action = \"replace\";\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1250,
+        "y": 200,
+        "wires": [
+            [
+                "a100000000000013"
+            ]
+        ]
+    },
+    {
+        "id": "a10000000000000d",
+        "type": "function",
+        "z": "f0a1b2c3d4e5f601",
+        "name": "Chuẩn hóa chart độ ẩm",
+        "func": "const rows = Array.isArray(msg.payload) ? msg.payload : [];\nmsg.payload = rows\n    .map(row => ({\n        device_code: String(row.device_code || \"UNKNOWN_SENSOR\"),\n        time: Number(row.time),\n        value: Number(row.value)\n    }))\n    .filter(row => Number.isFinite(row.time) && Number.isFinite(row.value));\nmsg.action = \"replace\";\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1240,
+        "y": 250,
+        "wires": [
+            [
+                "a100000000000014"
+            ]
+        ]
+    },
+    {
+        "id": "a10000000000000e",
+        "type": "ui-text",
+        "z": "f0a1b2c3d4e5f601",
+        "group": "c0ffee0000000011",
+        "order": 1,
+        "width": "3",
+        "height": "2",
+        "name": "Nhiệt độ trung bình",
+        "label": "Nhiệt độ trung bình",
+        "format": "{{msg.payload}}",
+        "layout": "col-center",
+        "style": true,
+        "font": "Helvetica, sans-serif",
+        "fontSize": 28,
+        "color": "#0f766e",
+        "wrapText": false,
+        "className": "",
+        "value": "payload",
+        "valueType": "msg",
+        "x": 1630,
+        "y": 20,
+        "wires": []
+    },
+    {
+        "id": "a10000000000000f",
+        "type": "ui-text",
+        "z": "f0a1b2c3d4e5f601",
+        "group": "c0ffee0000000011",
+        "order": 2,
+        "width": "3",
+        "height": "2",
+        "name": "Độ ẩm trung bình",
+        "label": "Độ ẩm trung bình",
+        "format": "{{msg.payload}}",
+        "layout": "col-center",
+        "style": true,
+        "font": "Helvetica, sans-serif",
+        "fontSize": 28,
+        "color": "#0369a1",
+        "wrapText": false,
+        "className": "",
+        "value": "payload",
+        "valueType": "msg",
+        "x": 1630,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "a100000000000010",
+        "type": "ui-text",
+        "z": "f0a1b2c3d4e5f601",
+        "group": "c0ffee0000000011",
+        "order": 3,
+        "width": "3",
+        "height": "2",
+        "name": "Task hoàn thành",
+        "label": "Task COMPLETED",
+        "format": "{{msg.payload}}",
+        "layout": "col-center",
+        "style": true,
+        "font": "Helvetica, sans-serif",
+        "fontSize": 28,
+        "color": "#15803d",
+        "wrapText": false,
+        "className": "",
+        "value": "payload",
+        "valueType": "msg",
+        "x": 1620,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "a100000000000011",
+        "type": "ui-text",
+        "z": "f0a1b2c3d4e5f601",
+        "group": "c0ffee0000000011",
+        "order": 4,
+        "width": "3",
+        "height": "2",
+        "name": "Tổng số task",
+        "label": "Tổng số task",
+        "format": "{{msg.payload}}",
+        "layout": "col-center",
+        "style": true,
+        "font": "Helvetica, sans-serif",
+        "fontSize": 28,
+        "color": "#b45309",
+        "wrapText": false,
+        "className": "",
+        "value": "payload",
+        "valueType": "msg",
+        "x": 1610,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "a100000000000012",
+        "type": "ui-text",
+        "z": "f0a1b2c3d4e5f601",
+        "group": "c0ffee0000000010",
+        "order": 3,
+        "width": "12",
+        "height": "1",
+        "name": "Trạng thái tải dữ liệu",
+        "label": "",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "style": false,
+        "font": "Helvetica, sans-serif",
+        "fontSize": 14,
+        "color": "#475569",
+        "wrapText": true,
+        "className": "",
+        "value": "payload",
+        "valueType": "msg",
+        "x": 1640,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "a100000000000013",
+        "type": "ui-chart",
+        "z": "f0a1b2c3d4e5f601",
+        "group": "c0ffee0000000012",
+        "name": "Biểu đồ nhiệt độ",
+        "label": "Nhiệt độ theo thời gian",
+        "order": 1,
+        "chartType": "line",
+        "category": "device_code",
+        "categoryType": "property",
+        "xAxisLabel": "Thời gian",
+        "xAxisProperty": "time",
+        "xAxisPropertyType": "property",
+        "xAxisType": "time",
+        "xAxisFormat": "{d}/{M} {HH}:{mm}",
+        "xAxisFormatType": "custom",
+        "xmin": "",
+        "xmax": "",
+        "yAxisLabel": "Nhiệt độ (°C)",
+        "yAxisProperty": "value",
+        "yAxisPropertyType": "property",
+        "ymin": "0",
+        "ymax": "60",
+        "bins": 10,
+        "action": "replace",
+        "stackSeries": false,
+        "pointShape": "circle",
+        "pointRadius": 2,
+        "showLegend": true,
+        "removeOlder": "0",
+        "removeOlderUnit": "3600",
+        "removeOlderPoints": "",
+        "colors": [
+            "#ef4444",
+            "#f97316",
+            "#eab308",
+            "#84cc16",
+            "#14b8a6",
+            "#0ea5e9",
+            "#6366f1",
+            "#a855f7",
+            "#ec4899"
+        ],
+        "textColor": [
+            "#475569"
+        ],
+        "textColorDefault": true,
+        "gridColor": [
+            "#e2e8f0"
+        ],
+        "gridColorDefault": true,
+        "width": "6",
+        "height": "7",
+        "className": "",
+        "interpolation": "linear",
+        "x": 1620,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a100000000000014",
+        "type": "ui-chart",
+        "z": "f0a1b2c3d4e5f601",
+        "group": "c0ffee0000000013",
+        "name": "Biểu đồ độ ẩm",
+        "label": "Độ ẩm theo thời gian",
+        "order": 1,
+        "chartType": "line",
+        "category": "device_code",
+        "categoryType": "property",
+        "xAxisLabel": "Thời gian",
+        "xAxisProperty": "time",
+        "xAxisPropertyType": "property",
+        "xAxisType": "time",
+        "xAxisFormat": "{d}/{M} {HH}:{mm}",
+        "xAxisFormatType": "custom",
+        "xmin": "",
+        "xmax": "",
+        "yAxisLabel": "Độ ẩm (%)",
+        "yAxisProperty": "value",
+        "yAxisPropertyType": "property",
+        "ymin": "0",
+        "ymax": "100",
+        "bins": 10,
+        "action": "replace",
+        "stackSeries": false,
+        "pointShape": "circle",
+        "pointRadius": 2,
+        "showLegend": true,
+        "removeOlder": "0",
+        "removeOlderUnit": "3600",
+        "removeOlderPoints": "",
+        "colors": [
+            "#0ea5e9",
+            "#06b6d4",
+            "#14b8a6",
+            "#22c55e",
+            "#84cc16",
+            "#6366f1",
+            "#8b5cf6",
+            "#d946ef",
+            "#ec4899"
+        ],
+        "textColor": [
+            "#475569"
+        ],
+        "textColorDefault": true,
+        "gridColor": [
+            "#e2e8f0"
+        ],
+        "gridColorDefault": true,
+        "width": "6",
+        "height": "7",
+        "className": "",
+        "interpolation": "linear",
+        "x": 1620,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a100000000000015",
+        "type": "catch",
+        "z": "f0a1b2c3d4e5f601",
+        "name": "Bắt lỗi truy vấn MySQL",
+        "scope": [
+            "a100000000000006",
+            "a100000000000007",
+            "a100000000000008",
+            "a100000000000009"
+        ],
+        "uncaught": false,
+        "x": 700,
+        "y": 340,
+        "wires": [
+            [
+                "a100000000000016"
+            ]
+        ]
+    },
+    {
+        "id": "a100000000000016",
+        "type": "function",
+        "z": "f0a1b2c3d4e5f601",
+        "name": "Hiển thị lỗi lịch sử",
+        "func": "const source = msg.error && msg.error.source ? msg.error.source.name : \"MySQL\";\nconst message = msg.error && msg.error.message ? msg.error.message : \"Không xác định\";\nmsg.payload = `Lỗi tải lịch sử tại ${source}: ${message}`;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 970,
+        "y": 340,
+        "wires": [
+            [
+                "a100000000000012",
+                "a100000000000017"
+            ]
+        ]
+    },
+    {
+        "id": "a100000000000017",
+        "type": "debug",
+        "z": "f0a1b2c3d4e5f601",
+        "name": "Lỗi Dashboard lịch sử",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1120,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "4ae7f15b225c27e8",
+        "type": "ui-gauge",
+        "z": "448fe177639c9a7f",
+        "name": "Nhiệt độ",
+        "group": "3ae3f2db0fbcb7bd",
+        "order": 1,
+        "value": "payload",
+        "valueType": "msg",
+        "width": "3",
+        "height": "3",
+        "gtype": "gauge-34",
+        "gstyle": "needle",
+        "title": "Nhiệt độ",
+        "alwaysShowTitle": false,
+        "floatingTitlePosition": "top-left",
+        "units": "°C",
+        "icon": "",
+        "prefix": "",
+        "suffix": "",
+        "segments": [
+            {
+                "from": "22",
+                "color": "#27dd27",
+                "text": "",
+                "textType": "label"
+            },
+            {
+                "from": "40",
+                "color": "#ed4a4a",
+                "text": "",
+                "textType": "label"
+            },
+            {
+                "from": "0",
+                "color": "#ed4a4a",
+                "text": "",
+                "textType": "label"
+            },
+            {
+                "from": "30",
+                "color": "#fcff2e",
+                "text": "",
+                "textType": "label"
+            }
+        ],
+        "min": 0,
+        "max": "50",
+        "sizeThickness": 16,
+        "sizeGap": 4,
+        "sizeKeyThickness": "0",
+        "styleRounded": true,
+        "styleGlow": false,
+        "className": "",
+        "x": 420,
+        "y": 40,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "eba90b9d20252176",
+        "type": "ui-gauge",
+        "z": "448fe177639c9a7f",
+        "name": "Độ ẩm",
+        "group": "e2c6945ff3d722ee",
+        "order": 1,
+        "value": "payload",
+        "valueType": "msg",
+        "width": "3",
+        "height": "3",
+        "gtype": "gauge-34",
+        "gstyle": "needle",
+        "title": "Độ ẩm",
+        "alwaysShowTitle": false,
+        "floatingTitlePosition": "top-left",
+        "units": "%",
+        "icon": "",
+        "prefix": "",
+        "suffix": "",
+        "segments": [
+            {
+                "from": "0",
+                "color": "#70b270",
+                "text": "",
+                "textType": "label"
+            },
+            {
+                "from": "40",
+                "color": "#a48d37",
+                "text": "",
+                "textType": "label"
+            },
+            {
+                "from": "60",
+                "color": "#b65d5d",
+                "text": "",
+                "textType": "label"
+            }
+        ],
+        "min": 0,
+        "max": "100",
+        "sizeThickness": 16,
+        "sizeGap": 4,
+        "sizeKeyThickness": "0",
+        "styleRounded": true,
+        "styleGlow": false,
+        "className": "",
+        "x": 410,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1cd96d59b407ea63",
+        "type": "ui-gauge",
+        "z": "448fe177639c9a7f",
+        "name": "Độ sáng",
+        "group": "79665e6c561e7d28",
+        "order": 1,
+        "value": "payload",
+        "valueType": "msg",
+        "width": "3",
+        "height": "3",
+        "gtype": "gauge-34",
+        "gstyle": "needle",
+        "title": "Độ sáng",
+        "alwaysShowTitle": false,
+        "floatingTitlePosition": "top-left",
+        "units": "%",
+        "icon": "",
+        "prefix": "",
+        "suffix": "",
+        "segments": [
+            {
+                "from": "0",
+                "color": "#b85151",
+                "text": "",
+                "textType": "label"
+            },
+            {
+                "from": "30",
+                "color": "#b89d3d",
+                "text": "",
+                "textType": "label"
+            },
+            {
+                "from": "70",
+                "color": "#62ac62",
+                "text": "",
+                "textType": "label"
+            }
+        ],
+        "min": 0,
+        "max": "100",
+        "sizeThickness": 16,
+        "sizeGap": 4,
+        "sizeKeyThickness": "0",
+        "styleRounded": true,
+        "styleGlow": false,
+        "className": "",
+        "x": 420,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0406361bc2cb2fa0",
+        "type": "switch",
+        "z": "448fe177639c9a7f",
+        "name": "",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "temperature",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "humidity",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "light_level",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "substrate_moisture",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 4,
+        "x": 190,
+        "y": 80,
+        "wires": [
+            [
+                "4ae7f15b225c27e8",
+                "96885752604a0c4f"
+            ],
+            [
+                "eba90b9d20252176",
+                "96885752604a0c4f"
+            ],
+            [
+                "1cd96d59b407ea63",
+                "96885752604a0c4f"
+            ],
+            [
+                "311d375444b47c9e"
+            ]
+        ]
+    },
+    {
+        "id": "2524b34c0f05a56c",
+        "type": "link in",
+        "z": "448fe177639c9a7f",
+        "name": "link in 1",
+        "links": [
+            "d92dd2e75a655836"
+        ],
+        "x": 185,
+        "y": 180,
+        "wires": [
+            [
+                "0406361bc2cb2fa0"
+            ]
+        ]
+    },
+    {
+        "id": "080af3a90ccde608",
+        "type": "link in",
+        "z": "448fe177639c9a7f",
+        "name": "actuator status in",
+        "links": [
+            "48a1b510160c33e5"
+        ],
+        "x": 615,
+        "y": 80,
+        "wires": [
+            [
+                "5f000ab7109febd5"
+            ]
+        ]
+    },
+    {
+        "id": "5f000ab7109febd5",
+        "type": "function",
+        "z": "448fe177639c9a7f",
+        "name": "format actuator status",
+        "func": "let state = flow.get(\"device_overview_status\") || {\n    mode: \"MANUAL\",\n\n    fan: {\n        value: \"OFF\",\n        failed: false\n    },\n\n    light: {\n        value: \"OFF\",\n        failed: false\n    },\n\n    pump: {\n        value: \"OFF\",\n        failed: false\n    },\n\n    esp32: \"OFFLINE\",\n\n    updated_at: null\n};\n\n/*\n * Cập nhật chế độ vận hành.\n *\n * Dữ liệu đầu vào:\n * msg.status_type = \"mode\"\n * msg.payload = \"MANUAL\" hoặc \"AUTO\"\n */\nif (msg.status_type === \"mode\") {\n    const mode = String(msg.payload || \"\")\n        .trim()\n        .toUpperCase();\n\n    if (![\"MANUAL\", \"AUTO\"].includes(mode)) {\n        return null;\n    }\n\n    state.mode = mode;\n}\n\n/*\n * Cập nhật trạng thái ESP32.\n *\n * Dữ liệu đầu vào:\n * msg.status_type = \"esp32\"\n * msg.payload = \"ONLINE\" hoặc \"OFFLINE\"\n */\nelse if (msg.status_type === \"esp32\") {\n    const esp32Status = String(msg.payload || \"\")\n        .trim()\n        .toUpperCase();\n\n    if (![\"ONLINE\", \"OFFLINE\"].includes(esp32Status)) {\n        return null;\n    }\n\n    state.esp32 = esp32Status;\n}\n\n/*\n * Cập nhật trạng thái actuator.\n *\n * Payload ví dụ:\n * {\n *   \"device_code\": \"VENT_FAN_01\",\n *   \"current_value\": \"ON\",\n *   \"status\": \"COMPLETED\"\n * }\n */\nelse {\n    const data = msg.payload;\n\n    if (!data || typeof data !== \"object\") {\n        return null;\n    }\n\n    const deviceCode = String(data.device_code || \"\")\n        .trim()\n        .toUpperCase();\n\n    const currentValue = String(data.current_value || \"\")\n        .trim()\n        .toUpperCase();\n\n    const taskStatus = String(\n        data.status || data.task_status || \"\"\n    )\n        .trim()\n        .toUpperCase();\n\n    if (![\"ON\", \"OFF\"].includes(currentValue)) {\n        return null;\n    }\n\n    const deviceMap = {\n        MIST_PUMP_01: \"pump\",\n        VENT_FAN_01: \"fan\",\n        GROW_LIGHT_01: \"light\"\n    };\n\n    const deviceKey = deviceMap[deviceCode];\n\n    if (!deviceKey) {\n        return null;\n    }\n\n    state[deviceKey] = {\n        value: currentValue,\n        failed: taskStatus === \"FAILED\"\n    };\n\n    /*\n     * Có dữ liệu trạng thái actuator từ ESP32\n     * thì tạm xem ESP32 đang online.\n     */\n    state.esp32 = \"ONLINE\";\n}\n\nstate.updated_at = new Date().toLocaleString(\"vi-VN\");\n\nflow.set(\"device_overview_status\", state);\n\nmsg.payload = state;\n\ndelete msg.status_type;\ndelete msg.device_code;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 200,
+        "wires": [
+            [
+                "756c9a0315eb6be3"
+            ]
+        ]
+    },
+    {
+        "id": "57021935f0dacaa0",
+        "type": "ui-chart",
+        "z": "448fe177639c9a7f",
+        "group": "292a30d562b5eeae",
+        "name": "Nhiệt độ",
+        "label": "Biểu đồ nhiệt độ",
+        "order": 1,
+        "chartType": "line",
+        "category": "topic",
+        "categoryType": "msg",
+        "xAxisLabel": "",
+        "xAxisProperty": "time",
+        "xAxisPropertyType": "property",
+        "xAxisType": "time",
+        "xAxisFormat": "",
+        "xAxisFormatType": "{HH}:{mm}",
+        "xmin": "",
+        "xmax": "",
+        "yAxisLabel": "",
+        "yAxisProperty": "value",
+        "yAxisPropertyType": "property",
+        "ymin": "0",
+        "ymax": "70",
+        "bins": 10,
+        "action": "replace",
+        "stackSeries": false,
+        "pointShape": "false",
+        "pointRadius": 4,
+        "showLegend": true,
+        "removeOlder": "0",
+        "removeOlderUnit": "3600",
+        "removeOlderPoints": "",
+        "colors": [
+            "#0095ff",
+            "#ff0000",
+            "#ff7f0e",
+            "#2ca02c",
+            "#a347e1",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "textColor": [
+            "#666666"
+        ],
+        "textColorDefault": true,
+        "gridColor": [
+            "#e5e5e5"
+        ],
+        "gridColorDefault": true,
+        "width": 6,
+        "height": "4",
+        "className": "",
+        "interpolation": "linear",
+        "x": 760,
+        "y": 520,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4ede2903f840cf11",
+        "type": "function",
+        "z": "448fe177639c9a7f",
+        "name": "Query temperature history",
+        "func": "msg.topic = `\n    SELECT\n        latest.time,\n        latest.temperature\n    FROM (\n        SELECT\n            o.id,\n            UNIX_TIMESTAMP(o.observed_at) * 1000 AS time,\n            o.value AS temperature,\n            o.observed_at\n        FROM observation AS o\n        INNER JOIN datastream AS d\n            ON d.id = o.datastream_id\n        INNER JOIN sensor AS s\n            ON s.id = d.sensor_id\n        WHERE s.device_code = 'SENSOR_DHT11_01'\n          AND d.observed_property = 'TEMPERATURE'\n        ORDER BY\n            o.observed_at DESC,\n            o.id DESC\n        LIMIT 30\n    ) AS latest\n    ORDER BY\n        latest.observed_at ASC,\n        latest.id ASC\n`;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 210,
+        "y": 420,
+        "wires": [
+            [
+                "a9a4a647864027b8"
+            ]
+        ]
+    },
+    {
+        "id": "74ada797bd6b84cb",
+        "type": "inject",
+        "z": "448fe177639c9a7f",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "2",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 70,
+        "y": 560,
+        "wires": [
+            [
+                "4ede2903f840cf11",
+                "340272f9b4dff909"
+            ]
+        ]
+    },
+    {
+        "id": "a9a4a647864027b8",
+        "type": "mysql",
+        "z": "448fe177639c9a7f",
+        "mydb": "e0c5f134542ac77e",
+        "name": "history",
+        "x": 430,
+        "y": 420,
+        "wires": [
+            [
+                "83deb28ce379645d"
+            ]
+        ]
+    },
+    {
+        "id": "83deb28ce379645d",
+        "type": "function",
+        "z": "448fe177639c9a7f",
+        "name": "format temperature",
+        "func": "if (!Array.isArray(msg.payload)) {\n    node.error(\"Kết quả truy vấn không phải mảng\", msg);\n    return null;\n}\n\nmsg.payload = msg.payload\n    .map(row => ({\n        time: Number(row.time),\n        value: Number(row.temperature)\n    }))\n    .filter(point =>\n        Number.isFinite(point.time) &&\n        Number.isFinite(point.value)\n    );\n\nmsg.topic = \"Nhiệt độ\";\nmsg.action = \"replace\";\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 510,
+        "y": 520,
+        "wires": [
+            [
+                "57021935f0dacaa0",
+                "9bb23d2055ed6a63"
+            ]
+        ]
+    },
+    {
+        "id": "9bb23d2055ed6a63",
+        "type": "debug",
+        "z": "448fe177639c9a7f",
+        "name": "debug format",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 700,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "340272f9b4dff909",
+        "type": "function",
+        "z": "448fe177639c9a7f",
+        "name": "Query humidity history",
+        "func": "msg.topic = `\n    SELECT\n        latest.time,\n        latest.humidity\n    FROM (\n        SELECT\n            o.id,\n            UNIX_TIMESTAMP(o.observed_at) * 1000 AS time,\n            o.value AS humidity,\n            o.observed_at\n        FROM observation AS o\n        WHERE o.datastream_id = 2\n        ORDER BY\n            o.observed_at DESC,\n            o.id DESC\n        LIMIT 30\n    ) AS latest\n    ORDER BY\n        latest.observed_at ASC,\n        latest.id ASC\n`;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 200,
+        "y": 680,
+        "wires": [
+            [
+                "ad6cfd5916aa1f37"
+            ]
+        ]
+    },
+    {
+        "id": "ad6cfd5916aa1f37",
+        "type": "mysql",
+        "z": "448fe177639c9a7f",
+        "mydb": "e0c5f134542ac77e",
+        "name": "history",
+        "x": 430,
+        "y": 680,
+        "wires": [
+            [
+                "b64d6798199659fd"
+            ]
+        ]
+    },
+    {
+        "id": "b64d6798199659fd",
+        "type": "function",
+        "z": "448fe177639c9a7f",
+        "name": "format humidity",
+        "func": "if (!Array.isArray(msg.payload)) {\n    node.error(\"Kết quả truy vấn độ ẩm không phải mảng\", msg);\n    return null;\n}\n\nconst points = msg.payload\n    .map(row => ({\n        time: Number(row.time),\n        value: Number(row.humidity)\n    }))\n    .filter(point =>\n        Number.isFinite(point.time) &&\n        Number.isFinite(point.value)\n    )\n    .sort((a, b) => a.time - b.time);\n\nmsg.topic = \"Độ ẩm\";\nmsg.action = \"replace\";\nmsg.payload = points;\n\nnode.status({\n    fill: points.length > 0 ? \"green\" : \"yellow\",\n    shape: \"dot\",\n    text: `${points.length} điểm`\n});\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620,
+        "y": 680,
+        "wires": [
+            [
+                "990c71cf2476d3a7"
+            ]
+        ]
+    },
+    {
+        "id": "990c71cf2476d3a7",
+        "type": "ui-chart",
+        "z": "448fe177639c9a7f",
+        "group": "292a30d562b5eeae",
+        "name": "",
+        "label": "Biểu đồ độ ẩm",
+        "order": 2,
+        "chartType": "line",
+        "category": "topic",
+        "categoryType": "msg",
+        "xAxisLabel": "",
+        "xAxisProperty": "time",
+        "xAxisPropertyType": "property",
+        "xAxisType": "time",
+        "xAxisFormat": "",
+        "xAxisFormatType": "{HH}:{mm}",
+        "xmin": "",
+        "xmax": "",
+        "yAxisLabel": "",
+        "yAxisProperty": "value",
+        "yAxisPropertyType": "property",
+        "ymin": "0",
+        "ymax": "100",
+        "bins": 10,
+        "action": "replace",
+        "stackSeries": false,
+        "pointShape": "false",
+        "pointRadius": 4,
+        "showLegend": true,
+        "removeOlder": "0",
+        "removeOlderUnit": "3600",
+        "removeOlderPoints": "",
+        "colors": [
+            "#1ba71b",
+            "#ff0000",
+            "#ff7f0e",
+            "#1ba71b",
+            "#a347e1",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "textColor": [
+            "#666666"
+        ],
+        "textColorDefault": true,
+        "gridColor": [
+            "#e5e5e5"
+        ],
+        "gridColorDefault": true,
+        "width": 6,
+        "height": "4",
+        "className": "",
+        "interpolation": "linear",
+        "x": 880,
+        "y": 680,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "756c9a0315eb6be3",
+        "type": "ui-template",
+        "z": "448fe177639c9a7f",
+        "group": "e201de97ad98cab2",
+        "page": "",
+        "ui": "",
+        "name": "equipment status",
+        "order": 1,
+        "width": "12",
+        "height": "2",
+        "head": "",
+        "format": "<template>\n    <div class=\"status-card\">\n        <div class=\"status-list\">\n            <div class=\"status-row\">\n                <div class=\"label\">Chế độ vận hành</div>\n                <div :class=\"modeBadgeClass(msg.payload?.mode)\">\n                    <span class=\"dot\"></span>\n                    {{ msg.payload?.mode || '--' }}\n                </div>\n            </div>\n\n            <div class=\"status-row\">\n                <div class=\"label\">Quạt</div>\n                <div :class=\"statusBadgeClass(msg.payload?.fan)\">\n                    <span class=\"dot\"></span>\n                    {{ displayStatus(msg.payload?.fan) }}\n                </div>\n            </div>\n\n            <div class=\"status-row\">\n                <div class=\"label\">Đèn</div>\n                <div :class=\"statusBadgeClass(msg.payload?.light)\">\n                    <span class=\"dot\"></span>\n                    {{ displayStatus(msg.payload?.light) }}\n                </div>\n            </div>\n\n            <div class=\"status-row\">\n                <div class=\"label\">Máy bơm</div>\n                <div :class=\"statusBadgeClass(msg.payload?.pump)\">\n                    <span class=\"dot\"></span>\n                    {{ displayStatus(msg.payload?.pump) }}\n                </div>\n            </div>\n\n            <div class=\"status-row\">\n                <div class=\"label\">ESP32</div>\n                <div :class=\"espBadgeClass(msg.payload?.esp32)\">\n                    <span class=\"dot\"></span>\n                    {{ msg.payload?.esp32 || '--' }}\n                </div>\n            </div>\n        </div>\n    </div>\n</template>\n\n<script>\n    export default {\n    methods: {\n        getStatusValue(status) {\n            if (!status) {\n                return \"\";\n            }\n\n            if (typeof status === \"object\") {\n                return String(status.value || \"\")\n                    .trim()\n                    .toUpperCase();\n            }\n\n            return String(status)\n                .trim()\n                .toUpperCase();\n        },\n\n        displayStatus(status) {\n            const value = this.getStatusValue(status);\n\n            if (!value) {\n                return \"--\";\n            }\n\n            if (\n                typeof status === \"object\" &&\n                status.failed === true\n            ) {\n                return value + \" · FAILED\";\n            }\n\n            return value;\n        },\n\n        statusBadgeClass(status) {\n            const value = this.getStatusValue(status);\n\n            if (\n                typeof status === \"object\" &&\n                status.failed === true\n            ) {\n                return \"badge badge-failed\";\n            }\n\n            if (value === \"ON\") {\n                return \"badge badge-on\";\n            }\n\n            if (value === \"OFF\") {\n                return \"badge badge-off\";\n            }\n\n            return \"badge badge-neutral\";\n        },\n\n        espBadgeClass(status) {\n            const value = this.getStatusValue(status);\n\n            if (value === \"ONLINE\") {\n                return \"badge badge-on\";\n            }\n\n            if (value === \"OFFLINE\") {\n                return \"badge badge-offline\";\n            }\n\n            return \"badge badge-neutral\";\n        },\n\n        modeBadgeClass(status) {\n            const value = this.getStatusValue(status);\n\n            if (value === \"AUTO\") {\n                return \"badge badge-auto\";\n            }\n\n            if (value === \"MANUAL\") {\n                return \"badge badge-manual\";\n            }\n\n            return \"badge badge-neutral\";\n        }\n    }\n}\n</script>\n\n<style>\n    /* Chỉ thay đổi bố cục. Các class trạng thái và hiệu ứng màu được giữ nguyên. */\n\n    .status-card {\n        width: 100%;\n        min-height: 0;\n        box-sizing: border-box;\n        overflow: hidden;\n\n        background: #ffffff;\n        border: 1px solid #eef2f7;\n        border-radius: 18px;\n        padding: 10px 14px;\n\n        box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);\n    }\n\n    /*\n * Desktop: năm trạng thái nằm trên cùng một hàng.\n * auto-fit giúp co giãn mà không làm vỡ bố cục.\n */\n    .status-list {\n        width: 100%;\n        display: grid;\n        grid-template-columns: repeat(5, minmax(180px, 1fr));\n        gap: 0;\n    }\n\n    .status-row {\n    min-width: 0;\n    \n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    justify-content: center;\n    \n    gap: 10px;\n    padding: 14px 16px;\n    \n    box-sizing: border-box;\n    border-right: 1px solid #f1f5f9;\n    }\n\n    .status-row:last-child {\n        border-right: none;\n    }\n\n    .label {\n    width: 100%;\n    min-width: 0;\n    \n    color: #0f172a;\n    font-size: 17px;\n    font-weight: 600;\n    line-height: 1.2;\n    \n    text-align: center;\n    white-space: nowrap;\n    }\n\n    /* Giữ nguyên hình dáng badge. */\n    .badge {\n        display: inline-flex;\n        align-items: center;\n        justify-content: center;\n        flex-shrink: 0;\n\n        gap: 8px;\n        min-width: 100px;\n        min-height: 40px;\n        padding: 4px 9px;\n\n        box-sizing: border-box;\n        border-radius: 12px;\n\n        font-size: 15px;\n        font-weight: 600;\n        line-height: 1;\n        letter-spacing: 0.2px;\n        white-space: nowrap;\n    }\n\n    .dot {\n        flex: 0 0 auto;\n        width: 9px;\n        height: 9px;\n        border-radius: 50%;\n    }\n\n    /* OFF */\n    .badge-off {\n        color: #c0392b;\n        background: #fbe4e4;\n    }\n\n    .badge-off .dot {\n        background: #c0392b;\n    }\n\n    /* ON / ONLINE */\n    .badge-on {\n        color: #1f8f4d;\n        background: #e7f7ec;\n    }\n\n    .badge-on .dot {\n        background: #1f8f4d;\n    }\n\n    /* OFFLINE */\n    .badge-offline {\n        color: #6b7280;\n        background: #eceff3;\n    }\n\n    .badge-offline .dot {\n        background: #6b7280;\n    }\n\n    /* MANUAL */\n    .badge-manual {\n        color: #b7791f;\n        background: #fff4db;\n    }\n\n    .badge-manual .dot {\n        background: #b7791f;\n    }\n\n    /* AUTO */\n    .badge-auto {\n        color: #2563eb;\n        background: #e3f0ff;\n    }\n\n    .badge-auto .dot {\n        background: #2563eb;\n    }\n\n    /* FAILED */\n    .badge-failed {\n        min-width: 135px;\n        color: #b45309;\n        background: #fef3c7;\n    }\n\n    .badge-failed .dot {\n        background: #f59e0b;\n    }\n\n    /* Chưa có dữ liệu */\n    .badge-neutral {\n        color: #475569;\n        background: #f1f5f9;\n    }\n\n    .badge-neutral .dot {\n        background: #475569;\n    }\n\n    /* Tablet: tự xuống 2–3 cột, vẫn giữ từng trạng thái theo chiều ngang. */\n    @media (max-width: 1200px) {\n        .status-list {\n            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));\n        }\n\n        .status-row {\n            border-right: none;\n            border-bottom: 1px solid #f1f5f9;\n        }\n\n        .status-row:last-child {\n            border-bottom: none;\n        }\n    }\n\n    /* Điện thoại: mỗi trạng thái một dòng. */\n    @media (max-width: 700px) {\n        .status-card {\n            padding: 6px 12px;\n        }\n\n        .status-list {\n            grid-template-columns: 1fr;\n        }\n\n        .status-row {\n            gap: 10px;\n            padding: 8px 4px;\n        }\n\n        .label {\n            font-size: 16px;\n            font-weight: 700;\n        }\n\n        .badge {\n            min-width: 78px;\n            min-height: 32px;\n            padding: 5px 10px;\n            border-radius: 10px;\n            font-size: 14px;\n            gap: 6px;\n        }\n\n        .badge-failed {\n            min-width: 118px;\n        }\n\n        .dot {\n            width: 7px;\n            height: 7px;\n        }\n    }\n</style>",
+        "storeOutMessages": true,
+        "passthru": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 1070,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "311d375444b47c9e",
+        "type": "ui-gauge",
+        "z": "448fe177639c9a7f",
+        "name": "Độ ẩm đất",
+        "group": "08a1fab380b92bb4",
+        "order": 1,
+        "value": "payload",
+        "valueType": "msg",
+        "width": "3",
+        "height": "3",
+        "gtype": "gauge-34",
+        "gstyle": "needle",
+        "title": "Độ ẩm đất",
+        "alwaysShowTitle": false,
+        "floatingTitlePosition": "top-left",
+        "units": "%",
+        "icon": "",
+        "prefix": "",
+        "suffix": "",
+        "segments": [
+            {
+                "from": "0",
+                "color": "#5cd65c",
+                "text": "",
+                "textType": "label"
+            },
+            {
+                "from": "4",
+                "color": "#ffc800",
+                "text": "",
+                "textType": "label"
+            },
+            {
+                "from": "7",
+                "color": "#ea5353",
+                "text": "",
+                "textType": "label"
+            }
+        ],
+        "min": 0,
+        "max": 10,
+        "sizeThickness": 16,
+        "sizeGap": 4,
+        "sizeKeyThickness": "0",
+        "styleRounded": true,
+        "styleGlow": false,
+        "className": "",
+        "x": 430,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "96885752604a0c4f",
+        "type": "function",
+        "z": "448fe177639c9a7f",
+        "name": "format environment status",
+        "func": "const property = String(msg.topic || \"\")\n    .trim()\n    .toLowerCase();\n\nconst thresholds = {\n    temperature: {\n        min: 25,\n        max: 32,\n        unit: \"°C\"\n    },\n    humidity: {\n        min: 80,\n        max: 90,\n        unit: \"%\"\n    },\n    light_level: {\n        min: 20,\n        max: 30,\n        unit: \"%\"\n    }\n};\n\nif (!thresholds[property]) {\n    return null;\n}\n\nconst rawValue =\n    msg.payload &&\n    typeof msg.payload === \"object\" &&\n    msg.payload.value !== undefined\n        ? msg.payload.value\n        : msg.payload;\n\nconst value = Number(rawValue);\n\nif (!Number.isFinite(value)) {\n    node.warn(`Không thể đánh giá ${property}: giá trị không hợp lệ`);\n    return null;\n}\n\nlet state = flow.get(\"environment_overview_status\") || {\n    temperature: {\n        value: null,\n        status: \"NO_DATA\",\n        label: \"Chưa có dữ liệu\",\n        min: 25,\n        max: 32,\n        unit: \"°C\"\n    },\n    humidity: {\n        value: null,\n        status: \"NO_DATA\",\n        label: \"Chưa có dữ liệu\",\n        min: 80,\n        max: 90,\n        unit: \"%\"\n    },\n    light_level: {\n        value: null,\n        status: \"NO_DATA\",\n        label: \"Chưa có dữ liệu\",\n        min: 20,\n        max: 30,\n        unit: \"%\"\n    },\n    updated_at: null\n};\n\nconst rule = thresholds[property];\nconst isNormal = value >= rule.min && value <= rule.max;\n\nstate[property] = {\n    value: Math.round(value * 10) / 10,\n    status: isNormal ? \"NORMAL\" : \"ABNORMAL\",\n    label: isNormal ? \"Bình thường\" : \"Bất thường\",\n    min: rule.min,\n    max: rule.max,\n    unit: rule.unit\n};\n\nstate.updated_at = new Date().toLocaleString(\"vi-VN\");\n\nflow.set(\"environment_overview_status\", state);\n\nmsg.payload = state;\nmsg.topic = \"environment_status\";\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 430,
+        "y": 320,
+        "wires": [
+            [
+                "f93f228cc0d074fd"
+            ]
+        ]
+    },
+    {
+        "id": "f93f228cc0d074fd",
+        "type": "ui-template",
+        "z": "448fe177639c9a7f",
+        "group": "4e8ba4fa3cdfe956",
+        "page": "",
+        "ui": "",
+        "name": "environment status",
+        "order": 1,
+        "width": "12",
+        "height": "3",
+        "head": "",
+        "format": "<template>\n    <div class=\"environment-card\">\n        <div class=\"environment-grid\">\n            <div class=\"environment-item\">\n                <div class=\"environment-header\">\n                    <div>\n                        <div class=\"environment-title\">Nhiệt độ</div>\n                        <div class=\"environment-range\">Bình thường: 25–32 °C</div>\n                    </div>\n\n                    <div :class=\"statusClass(msg.payload?.temperature)\">\n                        <span class=\"status-dot\"></span>\n                        {{ statusText(msg.payload?.temperature) }}\n                    </div>\n                </div>\n\n                <div class=\"environment-value\">\n                    {{ valueText(msg.payload?.temperature) }}\n                </div>\n            </div>\n\n            <div class=\"environment-item\">\n                <div class=\"environment-header\">\n                    <div>\n                        <div class=\"environment-title\">Độ ẩm</div>\n                        <div class=\"environment-range\">Bình thường: 80–90%</div>\n                    </div>\n\n                    <div :class=\"statusClass(msg.payload?.humidity)\">\n                        <span class=\"status-dot\"></span>\n                        {{ statusText(msg.payload?.humidity) }}\n                    </div>\n                </div>\n\n                <div class=\"environment-value\">\n                    {{ valueText(msg.payload?.humidity) }}\n                </div>\n            </div>\n\n            <div class=\"environment-item\">\n                <div class=\"environment-header\">\n                    <div>\n                        <div class=\"environment-title\">Độ sáng</div>\n                        <div class=\"environment-range\">Bình thường: 20–30%</div>\n                    </div>\n\n                    <div :class=\"statusClass(msg.payload?.light_level)\">\n                        <span class=\"status-dot\"></span>\n                        {{ statusText(msg.payload?.light_level) }}\n                    </div>\n                </div>\n\n                <div class=\"environment-value\">\n                    {{ valueText(msg.payload?.light_level) }}\n                </div>\n            </div>\n        </div>\n\n        <div class=\"environment-updated\">\n            Cập nhật gần nhất: {{ msg.payload?.updated_at || '--' }}\n        </div>\n    </div>\n</template>\n\n<script>\n    export default {\n        methods: {\n            valueText(item) {\n                if (\n                    !item ||\n                    item.value === null ||\n                    item.value === undefined ||\n                    !Number.isFinite(Number(item.value))\n                ) {\n                    return \"--\";\n                }\n\n                return `${Number(item.value).toFixed(1)} ${item.unit || \"\"}`;\n            },\n\n            statusText(item) {\n                return item?.label || \"Chưa có dữ liệu\";\n            },\n\n            statusClass(item) {\n                const status = String(item?.status || \"NO_DATA\")\n                    .trim()\n                    .toUpperCase();\n\n                if (status === \"NORMAL\") {\n                    return \"environment-badge badge-normal\";\n                }\n\n                if (status === \"ABNORMAL\") {\n                    return \"environment-badge badge-abnormal\";\n                }\n\n                return \"environment-badge badge-no-data\";\n            }\n        }\n    }\n</script>\n\n<style>\n    .environment-card {\n        width: 100%;\n        height: 100%;\n        box-sizing: border-box;\n        overflow: hidden;\n\n        background: #ffffff;\n        border: 1px solid #e2e8f0;\n        border-radius: 18px;\n        padding: 14px;\n\n        box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);\n    }\n\n    .environment-grid {\n        display: grid;\n        grid-template-columns: repeat(3, minmax(0, 1fr));\n        gap: 12px;\n    }\n\n    .environment-item {\n        min-width: 0;\n        box-sizing: border-box;\n\n        background: #f8fafc;\n        border: 1px solid #e2e8f0;\n        border-radius: 14px;\n        padding: 14px 16px;\n    }\n\n    .environment-header {\n        display: flex;\n        align-items: flex-start;\n        justify-content: space-between;\n        gap: 12px;\n    }\n\n    .environment-title {\n        color: #0f172a;\n        font-size: 17px;\n        font-weight: 700;\n        line-height: 1.2;\n    }\n\n    .environment-range {\n        margin-top: 5px;\n        color: #64748b;\n        font-size: 13px;\n        line-height: 1.3;\n    }\n\n    .environment-value {\n        margin-top: 14px;\n        color: #0f172a;\n        font-size: 28px;\n        font-weight: 750;\n        line-height: 1;\n    }\n\n    .environment-badge {\n        display: inline-flex;\n        align-items: center;\n        justify-content: center;\n        flex-shrink: 0;\n\n        gap: 7px;\n        min-height: 34px;\n        padding: 5px 10px;\n        box-sizing: border-box;\n        border-radius: 999px;\n\n        font-size: 13px;\n        font-weight: 700;\n        line-height: 1;\n        white-space: nowrap;\n    }\n\n    .status-dot {\n        width: 8px;\n        height: 8px;\n        flex: 0 0 auto;\n        border-radius: 50%;\n    }\n\n    .badge-normal {\n        color: #15803d;\n        background: #dcfce7;\n    }\n\n    .badge-normal .status-dot {\n        background: #22c55e;\n    }\n\n    .badge-abnormal {\n        color: #b91c1c;\n        background: #fee2e2;\n    }\n\n    .badge-abnormal .status-dot {\n        background: #ef4444;\n    }\n\n    .badge-no-data {\n        color: #475569;\n        background: #e2e8f0;\n    }\n\n    .badge-no-data .status-dot {\n        background: #64748b;\n    }\n\n    .environment-updated {\n        margin-top: 10px;\n        color: #64748b;\n        font-size: 12px;\n        text-align: right;\n    }\n\n    @media (max-width: 900px) {\n        .environment-grid {\n            grid-template-columns: 1fr;\n        }\n    }\n\n    @media (max-width: 500px) {\n        .environment-card {\n            padding: 10px;\n        }\n\n        .environment-header {\n            align-items: center;\n        }\n\n        .environment-title {\n            font-size: 16px;\n        }\n\n        .environment-value {\n            font-size: 24px;\n        }\n\n        .environment-badge {\n            min-height: 30px;\n            padding: 4px 8px;\n            font-size: 12px;\n        }\n    }\n</style>",
+        "storeOutMessages": true,
+        "passthru": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 780,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c8f04fa46784dae3",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-dashboard": "3.6.6",
+            "@flowfuse/node-red-dashboard": "1.30.2",
+            "node-red-node-mysql": "3.0.0"
+        }
+    }
+]
