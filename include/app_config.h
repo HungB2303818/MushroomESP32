@@ -46,7 +46,7 @@ namespace AppConfig
         constexpr unsigned long MQTT_RECONNECT_MS = 5000;
 
         constexpr unsigned long DEFAULT_SENSING_INTERVAL_MS =
-            10000;
+            30000;
     }
 
     // =====================================================
@@ -57,11 +57,11 @@ namespace AppConfig
     {
         constexpr uint8_t DHT11_SENSOR = 33;
         constexpr uint8_t LIGHT_SENSOR = 35;
-        constexpr uint8_t MOISTURE_SENSOR = 32;
+        constexpr uint8_t MOISTURE_SENSOR = 34;
 
         constexpr uint8_t MIST_PUMP = 25;
         constexpr uint8_t VENT_FAN = 27;
-        constexpr uint8_t GROW_LIGHT = 21;
+        constexpr uint8_t GROW_LIGHT = 26;
     }
 
     // =====================================================
@@ -248,7 +248,7 @@ namespace AppConfig
          /*
           * Để false cho đến khi đã nối cảm biến.
           */
-         false,
+         true,
 
          Timing::DEFAULT_SENSING_INTERVAL_MS,
 
