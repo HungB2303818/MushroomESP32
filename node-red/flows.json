@@ -408,20 +408,6 @@
         "groupType": "default"
     },
     {
-        "id": "292a30d562b5eeae",
-        "type": "ui-group",
-        "name": "Biểu đồ gần đây",
-        "page": "74c84250686fa996",
-        "width": "12",
-        "height": "5",
-        "order": 7,
-        "showTitle": true,
-        "className": "",
-        "visible": "true",
-        "disabled": "false",
-        "groupType": "default"
-    },
-    {
         "id": "b82d3eaf50714c29",
         "type": "ui-page",
         "name": "Điều khiển",
@@ -506,7 +492,7 @@
         "page": "74c84250686fa996",
         "width": "3",
         "height": "1",
-        "order": 3,
+        "order": 1,
         "showTitle": false,
         "className": "",
         "visible": "true",
@@ -534,7 +520,7 @@
         "page": "74c84250686fa996",
         "width": "3",
         "height": "1",
-        "order": 4,
+        "order": 3,
         "showTitle": false,
         "className": "",
         "visible": "true",
@@ -548,7 +534,7 @@
         "page": "74c84250686fa996",
         "width": "3",
         "height": "1",
-        "order": 1,
+        "order": 4,
         "showTitle": false,
         "className": "",
         "visible": "true",
@@ -563,6 +549,34 @@
         "width": "12",
         "height": "3",
         "order": 5,
+        "showTitle": false,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default"
+    },
+    {
+        "id": "3162deddc0e2a3d6",
+        "type": "ui-group",
+        "name": "Lịch sử ánh sáng",
+        "page": "c0ffee0000000004",
+        "width": 6,
+        "height": 1,
+        "order": 5,
+        "showTitle": false,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default"
+    },
+    {
+        "id": "03dd444cc8bc9f77",
+        "type": "ui-group",
+        "name": "Lịch sử độ ẩm đất",
+        "page": "c0ffee0000000004",
+        "width": 6,
+        "height": 1,
+        "order": 6,
         "showTitle": false,
         "className": "",
         "visible": "true",
@@ -590,7 +604,7 @@
         "type": "function",
         "z": "edb4e046c9aa16e2",
         "name": "check and create INSERT",
-        "func": "// Lưu topic MQTT trước khi thay msg.topic bằng câu SQL\nconst mqttTopic = String(msg.topic || \"\").trim();\n\n\nconst match = mqttTopic.match(\n    /^sensor\\/([A-Za-z0-9_-]{1,50})\\/([a-z][a-z0-9_]{0,49})$/\n);\n\nif (!match) {\n    node.warn(`Topic không hợp lệ: ${mqttTopic}`);\n    return [null, null];\n}\n\nconst deviceCode = match[1];\nconst property = match[2];\n\n// Payload có thể là:\n// {\"value\": 23.7}\n// hoặc chỉ là: 23.7\nconst data =\n    typeof msg.payload === \"object\" && msg.payload !== null\n        ? msg.payload\n        : { value: msg.payload };\n\nconst value = Number(data.value);\n\nif (!Number.isFinite(value)) {\n    node.warn(\"payload.value không phải là một số hợp lệ\");\n    return [null, null];\n}\n\n// Giới hạn kiểm tra dữ liệu cảm biến\nconst validRanges = {\n    temperature: [-20, 80],\n    humidity: [0, 100],\n    light_level: [0, 100]\n};\n\nconst range = validRanges[property];\n\nif (range) {\n    const [minValue, maxValue] = range;\n\n    if (value < minValue || value > maxValue) {\n        node.warn(\n            `Giá trị ${property} nằm ngoài khoảng hợp lệ: ${value}`\n        );\n        return [null, null];\n    }\n} else {\n    node.warn(\n        `Chưa cấu hình khoảng hợp lệ cho ${property}, chỉ kiểm tra kiểu số`\n    );\n}\n\n// Hàm chuyển chuỗi thành giá trị an toàn khi đưa vào SQL\nfunction sqlString(text) {\n    return \"'\" + String(text).replace(/'/g, \"''\") + \"'\";\n}\n\nconst receivedAt = Date.now();\n\n/*\n * OUTPUT 1: lưu vào MySQL\n *\n * Clone message để việc thay đổi msg.topic thành câu SQL\n * không ảnh hưởng đến message gửi sang Dashboard.\n */\nconst dbMsg = RED.util.cloneMessage(msg);\n\n// Giữ các thuộc tính cho node update last_seen_at phía sau\ndbMsg.device_code = deviceCode;\ndbMsg.sensor_property = property;\ndbMsg.sensor_value = value;\ndbMsg.mqtt_topic = mqttTopic;\ndbMsg.received_at = receivedAt;\n\n// Tìm datastream và thêm Observation\ndbMsg.topic = `\n    INSERT INTO observation (\n        datastream_id,\n        value,\n        observed_at\n    )\n    SELECT\n        d.id,\n        ${value},\n        NOW()\n    FROM datastream d\n    INNER JOIN sensor s\n        ON s.id = d.sensor_id\n    WHERE s.device_code = ${sqlString(deviceCode)}\n      AND d.observed_property = ${sqlString(property)}\n      AND d.mqtt_topic = ${sqlString(mqttTopic)}\n    LIMIT 1\n`;\n\n/*\n * OUTPUT 2: gửi dữ liệu thời gian thực sang Dashboard\n *\n * msg.topic được rút gọn thành:\n * temperature hoặc humidity\n * để Switch node trên Dashboard dễ phân loại.\n */\nconst dashboardValue =\n    property === \"light_level\"\n        ? Math.round(value * 10) / 10\n        : value;\n\nconst dashboardMsg = {\n    topic: property,\n    payload: dashboardValue,\n    device_code: deviceCode,\n    mqtt_topic: mqttTopic,\n    received_at: receivedAt\n};\n\nreturn [dbMsg, dashboardMsg];",
+        "func": "// Lưu topic MQTT trước khi thay msg.topic bằng câu SQL\nconst mqttTopic = String(msg.topic || \"\").trim();\n\n\nconst match = mqttTopic.match(\n    /^sensor\\/([A-Za-z0-9_-]{1,50})\\/([a-z][a-z0-9_]{0,49})$/\n);\n\nif (!match) {\n    node.warn(`Topic không hợp lệ: ${mqttTopic}`);\n    return [null, null];\n}\n\nconst deviceCode = match[1];\nconst property = match[2];\n\n// Payload có thể là:\n// {\"value\": 23.7}\n// hoặc chỉ là: 23.7\nconst data =\n    typeof msg.payload === \"object\" && msg.payload !== null\n        ? msg.payload\n        : { value: msg.payload };\n\nconst value = Number(data.value);\n\nif (!Number.isFinite(value)) {\n    node.warn(\"payload.value không phải là một số hợp lệ\");\n    return [null, null];\n}\n\n// Giới hạn kiểm tra dữ liệu cảm biến\nconst validRanges = {\n    temperature: [-20, 80],\n    humidity: [0, 100],\n    light_level: [0, 100],\n    substrate_moisture: [0, 100]\n};\n\nconst range = validRanges[property];\n\nif (range) {\n    const [minValue, maxValue] = range;\n\n    if (value < minValue || value > maxValue) {\n        node.warn(\n            `Giá trị ${property} nằm ngoài khoảng hợp lệ: ${value}`\n        );\n        return [null, null];\n    }\n} else {\n    node.warn(\n        `Chưa cấu hình khoảng hợp lệ cho ${property}, chỉ kiểm tra kiểu số`\n    );\n}\n\n// Hàm chuyển chuỗi thành giá trị an toàn khi đưa vào SQL\nfunction sqlString(text) {\n    return \"'\" + String(text).replace(/'/g, \"''\") + \"'\";\n}\n\nconst receivedAt = Date.now();\n\n/*\n * OUTPUT 1: lưu vào MySQL\n *\n * Clone message để việc thay đổi msg.topic thành câu SQL\n * không ảnh hưởng đến message gửi sang Dashboard.\n */\nconst dbMsg = RED.util.cloneMessage(msg);\n\n// Giữ các thuộc tính cho node update last_seen_at phía sau\ndbMsg.device_code = deviceCode;\ndbMsg.sensor_property = property;\ndbMsg.sensor_value = value;\ndbMsg.mqtt_topic = mqttTopic;\ndbMsg.received_at = receivedAt;\n\n// Tìm datastream và thêm Observation\ndbMsg.topic = `\n    INSERT INTO observation (\n        datastream_id,\n        value,\n        observed_at\n    )\n    SELECT\n        d.id,\n        ${value},\n        NOW()\n    FROM datastream d\n    INNER JOIN sensor s\n        ON s.id = d.sensor_id\n    WHERE s.device_code = ${sqlString(deviceCode)}\n      AND d.observed_property = ${sqlString(property)}\n      AND d.mqtt_topic = ${sqlString(mqttTopic)}\n    LIMIT 1\n`;\n\n/*\n * OUTPUT 2: gửi dữ liệu thời gian thực sang Dashboard\n *\n * msg.topic được rút gọn thành:\n * temperature hoặc humidity\n * để Switch node trên Dashboard dễ phân loại.\n */\nconst roundedProperties = [\n    \"light_level\",\n    \"substrate_moisture\"\n];\n\nconst dashboardValue =\n    roundedProperties.includes(property)\n        ? Math.round(value * 10) / 10\n        : value;\n        \nconst dashboardMsg = {\n    topic: property,\n    payload: dashboardValue,\n    device_code: deviceCode,\n    mqtt_topic: mqttTopic,\n    received_at: receivedAt\n};\n\nreturn [dbMsg, dashboardMsg];",
         "outputs": 2,
         "timeout": 0,
         "noerr": 0,
@@ -1000,7 +1014,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 590,
-        "y": 760,
+        "y": 740,
         "wires": []
     },
     {
@@ -1164,8 +1178,7 @@
                 "c4aabeaefd6cd964"
             ],
             [
-                "7d8dba0d5ac503cd",
-                "9069097f6d3e043f"
+                "7d8dba0d5ac503cd"
             ],
             [
                 "4444444444444441"
@@ -1247,27 +1260,9 @@
         "y": 760,
         "wires": [
             [
-                "e7b7dace12704f85",
                 "d658a1bcf2a3b86a"
             ]
         ]
-    },
-    {
-        "id": "e7b7dace12704f85",
-        "type": "debug",
-        "z": "a71c2d9e4f603b18",
-        "name": "check data format",
-        "active": true,
-        "tosidebar": true,
-        "console": true,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1180,
-        "y": 660,
-        "wires": []
     },
     {
         "id": "d658a1bcf2a3b86a",
@@ -1480,33 +1475,6 @@
         ]
     },
     {
-        "id": "9069097f6d3e043f",
-        "type": "debug",
-        "z": "a71c2d9e4f603b18",
-        "name": "light task response",
-        "active": true,
-        "tosidebar": true,
-        "console": true,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 880,
-        "y": 520,
-        "wires": []
-    },
-    {
-        "id": "a100000000000018",
-        "type": "comment",
-        "z": "f0a1b2c3d4e5f601",
-        "name": "CẤU HÌNH SAU KHI IMPORT",
-        "info": "1) Cài @flowfuse/node-red-dashboard và node-red-node-mysql.\n2) Mở config MySQL 'iot_mushroom' và nhập user/password.\n3) Nếu MySQL chạy Docker, đổi Host từ 127.0.0.1 sang tên container hoặc host phù hợp.\n4) Dashboard độc lập ở /mushroom-dashboard/history. Muốn ghép vào dashboard hiện tại, sửa ui-page 'Lịch sử' để dùng ui-base hiện có.\n5) Flow tự nhận sensor mới nếu datastream.observed_property là temperature hoặc humidity; không cần thêm nhánh theo device_code.\n6) Khi dữ liệu lớn, có thể thêm index: CREATE INDEX idx_task_created_status ON task(created_at, status); và CREATE INDEX idx_datastream_property ON datastream(observed_property, sensor_id);",
-        "x": 250,
-        "y": 60,
-        "wires": []
-    },
-    {
         "id": "a100000000000001",
         "type": "inject",
         "z": "f0a1b2c3d4e5f601",
@@ -1646,9 +1614,9 @@
         "id": "a100000000000005",
         "type": "function",
         "z": "f0a1b2c3d4e5f601",
-        "name": "Tạo 4 truy vấn lịch sử",
-        "func": "const periods = {\n    \"24h\": { hours: 24, bucketSeconds: 10 * 60, label: \"24 giờ gần nhất\" },\n    \"7d\":  { hours: 7 * 24, bucketSeconds: 60 * 60, label: \"7 ngày gần nhất\" },\n    \"30d\": { hours: 30 * 24, bucketSeconds: 6 * 60 * 60, label: \"30 ngày gần nhất\" },\n    \"90d\": { hours: 90 * 24, bucketSeconds: 24 * 60 * 60, label: \"90 ngày gần nhất\" }\n};\n\nlet periodKey = String(msg.payload || \"\");\nif (periods[periodKey]) {\n    flow.set(\"history_period\", periodKey);\n} else {\n    periodKey = flow.get(\"history_period\") || \"24h\";\n}\n\nconst period = periods[periodKey] || periods[\"24h\"];\nconst common = {\n    period_key: periodKey,\n    period_label: period.label,\n    query_started_at: Date.now()\n};\n\nconst sensorStats = {\n    ...common,\n    topic: `\n        SELECT\n            ROUND(AVG(CASE WHEN property_name = 'temperature' THEN avg_value END), 2) AS avg_temperature,\n            ROUND(AVG(CASE WHEN property_name = 'humidity' THEN avg_value END), 2) AS avg_humidity,\n            COALESCE(SUM(CASE WHEN property_name = 'temperature' THEN sample_count ELSE 0 END), 0) AS temperature_samples,\n            COALESCE(SUM(CASE WHEN property_name = 'humidity' THEN sample_count ELSE 0 END), 0) AS humidity_samples,\n            COUNT(DISTINCT CASE WHEN property_name = 'temperature' THEN device_code END) AS temperature_sensors,\n            COUNT(DISTINCT CASE WHEN property_name = 'humidity' THEN device_code END) AS humidity_sensors\n        FROM (\n            SELECT\n                s.device_code,\n                LOWER(d.observed_property) AS property_name,\n                AVG(o.value) AS avg_value,\n                COUNT(*) AS sample_count\n            FROM observation AS o\n            INNER JOIN datastream AS d ON d.id = o.datastream_id\n            INNER JOIN sensor AS s ON s.id = d.sensor_id\n            WHERE o.observed_at >= DATE_SUB(NOW(), INTERVAL ? HOUR)\n              AND LOWER(d.observed_property) IN ('temperature', 'humidity')\n            GROUP BY s.device_code, LOWER(d.observed_property)\n        ) AS sensor_period_stats\n    `,\n    payload: [period.hours]\n};\n\nconst taskStats = {\n    ...common,\n    topic: `\n        SELECT\n            COALESCE(SUM(CASE WHEN t.status = 'COMPLETED' THEN 1 ELSE 0 END), 0) AS completed_tasks,\n            COUNT(*) AS total_tasks\n        FROM task AS t\n        WHERE t.created_at >= DATE_SUB(NOW(), INTERVAL ? HOUR)\n    `,\n    payload: [period.hours]\n};\n\nconst temperatureHistory = {\n    ...common,\n    topic: `\n        SELECT\n            s.device_code,\n            CAST(UNIX_TIMESTAMP(MIN(o.observed_at)) * 1000 AS UNSIGNED) AS time,\n            ROUND(AVG(o.value), 2) AS value\n        FROM observation AS o\n        INNER JOIN datastream AS d ON d.id = o.datastream_id\n        INNER JOIN sensor AS s ON s.id = d.sensor_id\n        WHERE LOWER(d.observed_property) = 'temperature'\n          AND o.observed_at >= DATE_SUB(NOW(), INTERVAL ? HOUR)\n        GROUP BY\n            s.device_code,\n            FLOOR(UNIX_TIMESTAMP(o.observed_at) / ?)\n        ORDER BY time ASC, s.device_code ASC\n    `,\n    payload: [period.hours, period.bucketSeconds]\n};\n\nconst humidityHistory = {\n    ...common,\n    topic: `\n        SELECT\n            s.device_code,\n            CAST(UNIX_TIMESTAMP(MIN(o.observed_at)) * 1000 AS UNSIGNED) AS time,\n            ROUND(AVG(o.value), 2) AS value\n        FROM observation AS o\n        INNER JOIN datastream AS d ON d.id = o.datastream_id\n        INNER JOIN sensor AS s ON s.id = d.sensor_id\n        WHERE LOWER(d.observed_property) = 'humidity'\n          AND o.observed_at >= DATE_SUB(NOW(), INTERVAL ? HOUR)\n        GROUP BY\n            s.device_code,\n            FLOOR(UNIX_TIMESTAMP(o.observed_at) / ?)\n        ORDER BY time ASC, s.device_code ASC\n    `,\n    payload: [period.hours, period.bucketSeconds]\n};\n\nreturn [sensorStats, taskStats, temperatureHistory, humidityHistory];",
-        "outputs": 4,
+        "name": "Tạo 6 truy vấn lịch sử",
+        "func": "\nconst periods = {\n    \"24h\": {\n        hours: 24,\n        bucketSeconds: 10 * 60,\n        label: \"24 giờ gần nhất\"\n    },\n\n    \"7d\": {\n        hours: 7 * 24,\n        bucketSeconds: 60 * 60,\n        label: \"7 ngày gần nhất\"\n    },\n\n    \"30d\": {\n        hours: 30 * 24,\n        bucketSeconds: 6 * 60 * 60,\n        label: \"30 ngày gần nhất\"\n    },\n\n    \"90d\": {\n        hours: 90 * 24,\n        bucketSeconds: 24 * 60 * 60,\n        label: \"90 ngày gần nhất\"\n    }\n};\n\nlet periodKey = String(msg.payload || \"\");\n\nif (periods[periodKey]) {\n    flow.set(\"history_period\", periodKey);\n} else {\n    periodKey = flow.get(\"history_period\") || \"24h\";\n}\n\nconst period = periods[periodKey] || periods[\"24h\"];\n\nconst common = {\n    period_key: periodKey,\n    period_label: period.label,\n    query_started_at: Date.now()\n};\n\n// =====================================================\n// 1. THỐNG KÊ CẢM BIẾN\n// =====================================================\n\nconst sensorStats = {\n    ...common,\n\n    topic: `\nSELECT\nROUND(\n    AVG(\n        CASE\n                        WHEN property_name = 'temperature'\n                        THEN avg_value\n                    END\n    ),\n    2\n) AS avg_temperature,\n\n    ROUND(\n        AVG(\n            CASE\n                        WHEN property_name = 'humidity'\n                        THEN avg_value\n                    END\n        ),\n        2\n    ) AS avg_humidity,\n\n        ROUND(\n            AVG(\n                CASE\n                        WHEN property_name = 'light_level'\n                        THEN avg_value\n                    END\n            ),\n            2\n        ) AS avg_light_level,\n\n            ROUND(\n                AVG(\n                    CASE\n                        WHEN property_name = 'substrate_moisture'\n                        THEN avg_value\n                    END\n                ),\n                2\n            ) AS avg_substrate_moisture,\n\n                COALESCE(\n                    SUM(\n                        CASE\n                        WHEN property_name = 'temperature'\n                        THEN sample_count\n                        ELSE 0\n                    END\n                    ),\n                    0\n                ) AS temperature_samples,\n\n                    COALESCE(\n                        SUM(\n                            CASE\n                        WHEN property_name = 'humidity'\n                        THEN sample_count\n                        ELSE 0\n                    END\n                        ),\n                        0\n                    ) AS humidity_samples,\n\n                        COALESCE(\n                            SUM(\n                                CASE\n                        WHEN property_name = 'light_level'\n                        THEN sample_count\n                        ELSE 0\n                    END\n                            ),\n                            0\n                        ) AS light_level_samples,\n\n                            COALESCE(\n                                SUM(\n                                    CASE\n                        WHEN property_name = 'substrate_moisture'\n                        THEN sample_count\n                        ELSE 0\n                    END\n                                ),\n                                0\n                            ) AS substrate_moisture_samples,\n\n                                COUNT(\n                                    DISTINCT CASE\n                    WHEN property_name = 'temperature'\n                    THEN device_code\n                END\n                                ) AS temperature_sensors,\n\n                                    COUNT(\n                                        DISTINCT CASE\n                    WHEN property_name = 'humidity'\n                    THEN device_code\n                END\n                                    ) AS humidity_sensors,\n\n                                        COUNT(\n                                            DISTINCT CASE\n                    WHEN property_name = 'light_level'\n                    THEN device_code\n                END\n                                        ) AS light_level_sensors,\n\n                                            COUNT(\n                                                DISTINCT CASE\n                    WHEN property_name = 'substrate_moisture'\n                    THEN device_code\n                END\n                                            ) AS substrate_moisture_sensors\n\nFROM(\n    SELECT\n                s.device_code,\n    LOWER(d.observed_property) AS property_name,\n    AVG(o.value) AS avg_value,\n    COUNT(*) AS sample_count\n\n            FROM observation AS o\n\n            INNER JOIN datastream AS d\n                ON d.id = o.datastream_id\n\n            INNER JOIN sensor AS s\n                ON s.id = d.sensor_id\n\n            WHERE o.observed_at >= DATE_SUB(\n        NOW(),\n        INTERVAL ? HOUR\n            )\n\n            AND LOWER(d.observed_property) IN(\n            'temperature',\n            'humidity',\n            'light_level',\n            'substrate_moisture'\n        )\n\n            GROUP BY\n                s.device_code,\n    LOWER(d.observed_property)\n) AS sensor_period_stats\n    `,\n\n    payload: [period.hours]\n};\n\n// =====================================================\n// 2. THỐNG KÊ TASK\n// =====================================================\n\nconst taskStats = {\n    ...common,\n\n    topic: `\nSELECT\nCOALESCE(\n    SUM(\n        CASE\n                        WHEN t.status = 'COMPLETED'\n                        THEN 1\n                        ELSE 0\n                    END\n    ),\n    0\n) AS completed_tasks,\n\n    COUNT(*) AS total_tasks\n\n        FROM task AS t\n\n        WHERE t.created_at >= DATE_SUB(\n        NOW(),\n        INTERVAL ? HOUR\n        )\n    `,\n\n    payload: [period.hours]\n};\n\n// =====================================================\n// 3. LỊCH SỬ NHIỆT ĐỘ\n// =====================================================\n\nconst temperatureHistory = {\n    ...common,\n\n    observed_property: \"temperature\",\n    chart_title: \"Nhiệt độ\",\n\n    topic: `\nSELECT\ns.device_code,\n\n    CAST(\n        UNIX_TIMESTAMP(MIN(o.observed_at)) * 1000\n                AS UNSIGNED\n    ) AS time,\n\n        ROUND(AVG(o.value), 2) AS value\n\n        FROM observation AS o\n\n        INNER JOIN datastream AS d\n            ON d.id = o.datastream_id\n\n        INNER JOIN sensor AS s\n            ON s.id = d.sensor_id\n\n        WHERE LOWER(d.observed_property) = 'temperature'\n\n        AND o.observed_at >= DATE_SUB(\n            NOW(),\n            INTERVAL ? HOUR\n        )\n\n        GROUP BY\ns.device_code,\n    FLOOR(\n        UNIX_TIMESTAMP(o.observed_at) / ?\n            )\n\n        ORDER BY\n            time ASC,\n    s.device_code ASC\n        `,\n\n    payload: [\n        period.hours,\n        period.bucketSeconds\n    ]\n};\n\n// =====================================================\n// 4. LỊCH SỬ ĐỘ ẨM KHÔNG KHÍ\n// =====================================================\n\nconst humidityHistory = {\n    ...common,\n\n    observed_property: \"humidity\",\n    chart_title: \"Độ ẩm không khí\",\n\n    topic: `\nSELECT\ns.device_code,\n\n    CAST(\n        UNIX_TIMESTAMP(MIN(o.observed_at)) * 1000\n                AS UNSIGNED\n    ) AS time,\n\n        ROUND(AVG(o.value), 2) AS value\n\n        FROM observation AS o\n\n        INNER JOIN datastream AS d\n            ON d.id = o.datastream_id\n\n        INNER JOIN sensor AS s\n            ON s.id = d.sensor_id\n\n        WHERE LOWER(d.observed_property) = 'humidity'\n\n        AND o.observed_at >= DATE_SUB(\n            NOW(),\n            INTERVAL ? HOUR\n        )\n\n        GROUP BY\ns.device_code,\n    FLOOR(\n        UNIX_TIMESTAMP(o.observed_at) / ?\n            )\n\n        ORDER BY\n            time ASC,\n    s.device_code ASC\n        `,\n\n    payload: [\n        period.hours,\n        period.bucketSeconds\n    ]\n};\n\n// =====================================================\n// 5. LỊCH SỬ ÁNH SÁNG\n// =====================================================\n\nconst lightHistory = {\n    ...common,\n\n    observed_property: \"light_level\",\n    chart_title: \"Độ sáng\",\n\n    topic: `\nSELECT\ns.device_code,\n\n    CAST(\n        UNIX_TIMESTAMP(MIN(o.observed_at)) * 1000\n                AS UNSIGNED\n    ) AS time,\n\n        ROUND(AVG(o.value), 2) AS value\n\n        FROM observation AS o\n\n        INNER JOIN datastream AS d\n            ON d.id = o.datastream_id\n\n        INNER JOIN sensor AS s\n            ON s.id = d.sensor_id\n\n        WHERE LOWER(d.observed_property) = 'light_level'\n\n        AND o.observed_at >= DATE_SUB(\n            NOW(),\n            INTERVAL ? HOUR\n        )\n\n        GROUP BY\ns.device_code,\n    FLOOR(\n        UNIX_TIMESTAMP(o.observed_at) / ?\n            )\n\n        ORDER BY\n            time ASC,\n    s.device_code ASC\n        `,\n\n    payload: [\n        period.hours,\n        period.bucketSeconds\n    ]\n};\n\n// =====================================================\n// 6. LỊCH SỬ ĐỘ ẨM GIÁ THỂ\n// =====================================================\n\nconst substrateMoistureHistory = {\n    ...common,\n\n    observed_property: \"substrate_moisture\",\n    chart_title: \"Độ ẩm giá thể\",\n\n    topic: `\nSELECT\ns.device_code,\n\n    CAST(\n        UNIX_TIMESTAMP(MIN(o.observed_at)) * 1000\n                AS UNSIGNED\n    ) AS time,\n\n        ROUND(AVG(o.value), 2) AS value\n\n        FROM observation AS o\n\n        INNER JOIN datastream AS d\n            ON d.id = o.datastream_id\n\n        INNER JOIN sensor AS s\n            ON s.id = d.sensor_id\n\n        WHERE LOWER(d.observed_property) = 'substrate_moisture'\n\n        AND o.observed_at >= DATE_SUB(\n            NOW(),\n            INTERVAL ? HOUR\n        )\n\n        GROUP BY\ns.device_code,\n    FLOOR(\n        UNIX_TIMESTAMP(o.observed_at) / ?\n            )\n\n        ORDER BY\n            time ASC,\n    s.device_code ASC\n        `,\n\n    payload: [\n        period.hours,\n        period.bucketSeconds\n    ]\n};\n\nreturn [\n    sensorStats,\n    taskStats,\n    temperatureHistory,\n    humidityHistory,\n    lightHistory,\n    substrateMoistureHistory\n];\n",
+        "outputs": 6,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
@@ -1668,6 +1636,12 @@
             ],
             [
                 "a100000000000009"
+            ],
+            [
+                "53bc9b911770b4d6"
+            ],
+            [
+                "1fe6403fab7aa33a"
             ]
         ]
     },
@@ -1792,7 +1766,8 @@
         "y": 200,
         "wires": [
             [
-                "a100000000000013"
+                "a100000000000013",
+                "9dbd936ba7cb3420"
             ]
         ]
     },
@@ -1933,7 +1908,7 @@
         "value": "payload",
         "valueType": "msg",
         "x": 1640,
-        "y": 380,
+        "y": 540,
         "wires": []
     },
     {
@@ -2072,8 +2047,8 @@
             "a100000000000009"
         ],
         "uncaught": false,
-        "x": 700,
-        "y": 340,
+        "x": 760,
+        "y": 500,
         "wires": [
             [
                 "a100000000000016"
@@ -2092,8 +2067,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 970,
-        "y": 340,
+        "x": 1050,
+        "y": 580,
         "wires": [
             [
                 "a100000000000012",
@@ -2114,8 +2089,235 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1120,
+        "x": 1640,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "53bc9b911770b4d6",
+        "type": "mysql",
+        "z": "f0a1b2c3d4e5f601",
+        "mydb": "e0c5f134542ac77e",
+        "name": "SQL: lịch sử ánh sáng",
+        "x": 980,
+        "y": 320,
+        "wires": [
+            [
+                "725fb87ea932a540"
+            ]
+        ]
+    },
+    {
+        "id": "1fe6403fab7aa33a",
+        "type": "mysql",
+        "z": "f0a1b2c3d4e5f601",
+        "mydb": "e0c5f134542ac77e",
+        "name": "SQL: lịch sử ánh sáng",
+        "x": 980,
+        "y": 380,
+        "wires": [
+            [
+                "7e9e9f9ba8b579b7"
+            ]
+        ]
+    },
+    {
+        "id": "725fb87ea932a540",
+        "type": "function",
+        "z": "f0a1b2c3d4e5f601",
+        "name": "Chuẩn hóa chart ánh sáng",
+        "func": "const rows = Array.isArray(msg.payload) ? msg.payload : [];\nmsg.payload = rows\n    .map(row => ({\n        device_code: String(row.device_code || \"UNKNOWN_SENSOR\"),\n        time: Number(row.time),\n        value: Number(row.value)\n    }))\n    .filter(row => Number.isFinite(row.time) && Number.isFinite(row.value));\nmsg.action = \"replace\";\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1260,
+        "y": 320,
+        "wires": [
+            [
+                "24b31a41fc541183",
+                "5532053710552b87"
+            ]
+        ]
+    },
+    {
+        "id": "7e9e9f9ba8b579b7",
+        "type": "function",
+        "z": "f0a1b2c3d4e5f601",
+        "name": "Chuẩn hóa chart độ ẩm đất",
+        "func": "const rows = Array.isArray(msg.payload) ? msg.payload : [];\nmsg.payload = rows\n    .map(row => ({\n        device_code: String(row.device_code || \"UNKNOWN_SENSOR\"),\n        time: Number(row.time),\n        value: Number(row.value)\n    }))\n    .filter(row => Number.isFinite(row.time) && Number.isFinite(row.value));\nmsg.action = \"replace\";\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1260,
+        "y": 380,
+        "wires": [
+            [
+                "9f2839a5cbb1e288"
+            ]
+        ]
+    },
+    {
+        "id": "24b31a41fc541183",
+        "type": "ui-chart",
+        "z": "f0a1b2c3d4e5f601",
+        "group": "3162deddc0e2a3d6",
+        "name": "Biểu đồ ánh sáng",
+        "label": "Độ sáng theo thời gian",
+        "order": 1,
+        "chartType": "line",
+        "category": "device_code",
+        "categoryType": "property",
+        "xAxisLabel": "Thời gian",
+        "xAxisProperty": "time",
+        "xAxisPropertyType": "property",
+        "xAxisType": "time",
+        "xAxisFormat": "{d}/{M} {HH}:{mm}",
+        "xAxisFormatType": "custom",
+        "xmin": "",
+        "xmax": "",
+        "yAxisLabel": "Độ sáng (%)",
+        "yAxisProperty": "value",
+        "yAxisPropertyType": "property",
+        "ymin": "0",
+        "ymax": "100",
+        "bins": 10,
+        "action": "replace",
+        "stackSeries": false,
+        "pointShape": "circle",
+        "pointRadius": 4,
+        "showLegend": true,
+        "removeOlder": "0",
+        "removeOlderUnit": "3600",
+        "removeOlderPoints": "",
+        "colors": [
+            "#fbff00",
+            "#ff0000",
+            "#ff7f0e",
+            "#2ca02c",
+            "#a347e1",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "textColor": [
+            "#666666"
+        ],
+        "textColorDefault": true,
+        "gridColor": [
+            "#e5e5e5"
+        ],
+        "gridColorDefault": true,
+        "width": 6,
+        "height": "7",
+        "className": "",
+        "interpolation": "linear",
+        "x": 1630,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9f2839a5cbb1e288",
+        "type": "ui-chart",
+        "z": "f0a1b2c3d4e5f601",
+        "group": "03dd444cc8bc9f77",
+        "name": "Biểu đồ độ ẩm đất",
+        "label": "Độ ẩm đất theo thời gian",
+        "order": 1,
+        "chartType": "line",
+        "category": "device_code",
+        "categoryType": "property",
+        "xAxisLabel": "Thời gian",
+        "xAxisProperty": "time",
+        "xAxisPropertyType": "property",
+        "xAxisType": "time",
+        "xAxisFormat": "{d}/{M} {HH}:{mm}",
+        "xAxisFormatType": "custom",
+        "xmin": "",
+        "xmax": "",
+        "yAxisLabel": "Độ ẩm (%)",
+        "yAxisProperty": "value",
+        "yAxisPropertyType": "property",
+        "ymin": "0",
+        "ymax": "100",
+        "bins": 10,
+        "action": "replace",
+        "stackSeries": false,
+        "pointShape": "circle",
+        "pointRadius": "2",
+        "showLegend": true,
+        "removeOlder": "0",
+        "removeOlderUnit": "3600",
+        "removeOlderPoints": "",
+        "colors": [
+            "#2ca02c",
+            "#ff0000",
+            "#ff7f0e",
+            "#2ca02c",
+            "#a347e1",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "textColor": [
+            "#666666"
+        ],
+        "textColorDefault": true,
+        "gridColor": [
+            "#e5e5e5"
+        ],
+        "gridColorDefault": true,
+        "width": 6,
+        "height": "7",
+        "className": "",
+        "interpolation": "linear",
+        "x": 1630,
         "y": 440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5532053710552b87",
+        "type": "debug",
+        "z": "f0a1b2c3d4e5f601",
+        "name": "debug normalize light history",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1430,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "9dbd936ba7cb3420",
+        "type": "debug",
+        "z": "f0a1b2c3d4e5f601",
+        "name": "debug light chart",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1090,
+        "y": 480,
         "wires": []
     },
     {
@@ -2147,7 +2349,7 @@
             },
             {
                 "from": "40",
-                "color": "#ed4a4a",
+                "color": "#ff0000",
                 "text": "",
                 "textType": "label"
             },
@@ -2159,7 +2361,7 @@
             },
             {
                 "from": "30",
-                "color": "#fcff2e",
+                "color": "#ffff00",
                 "text": "",
                 "textType": "label"
             }
@@ -2213,7 +2415,7 @@
             },
             {
                 "from": "60",
-                "color": "#b65d5d",
+                "color": "#ff0000",
                 "text": "",
                 "textType": "label"
             }
@@ -2334,7 +2536,8 @@
                 "96885752604a0c4f"
             ],
             [
-                "311d375444b47c9e"
+                "311d375444b47c9e",
+                "96885752604a0c4f"
             ]
         ]
     },
@@ -2388,286 +2591,6 @@
             [
                 "756c9a0315eb6be3"
             ]
-        ]
-    },
-    {
-        "id": "57021935f0dacaa0",
-        "type": "ui-chart",
-        "z": "448fe177639c9a7f",
-        "group": "292a30d562b5eeae",
-        "name": "Nhiệt độ",
-        "label": "Biểu đồ nhiệt độ",
-        "order": 1,
-        "chartType": "line",
-        "category": "topic",
-        "categoryType": "msg",
-        "xAxisLabel": "",
-        "xAxisProperty": "time",
-        "xAxisPropertyType": "property",
-        "xAxisType": "time",
-        "xAxisFormat": "",
-        "xAxisFormatType": "{HH}:{mm}",
-        "xmin": "",
-        "xmax": "",
-        "yAxisLabel": "",
-        "yAxisProperty": "value",
-        "yAxisPropertyType": "property",
-        "ymin": "0",
-        "ymax": "70",
-        "bins": 10,
-        "action": "replace",
-        "stackSeries": false,
-        "pointShape": "false",
-        "pointRadius": 4,
-        "showLegend": true,
-        "removeOlder": "0",
-        "removeOlderUnit": "3600",
-        "removeOlderPoints": "",
-        "colors": [
-            "#0095ff",
-            "#ff0000",
-            "#ff7f0e",
-            "#2ca02c",
-            "#a347e1",
-            "#d62728",
-            "#ff9896",
-            "#9467bd",
-            "#c5b0d5"
-        ],
-        "textColor": [
-            "#666666"
-        ],
-        "textColorDefault": true,
-        "gridColor": [
-            "#e5e5e5"
-        ],
-        "gridColorDefault": true,
-        "width": 6,
-        "height": "4",
-        "className": "",
-        "interpolation": "linear",
-        "x": 760,
-        "y": 520,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "4ede2903f840cf11",
-        "type": "function",
-        "z": "448fe177639c9a7f",
-        "name": "Query temperature history",
-        "func": "msg.topic = `\n    SELECT\n        latest.time,\n        latest.temperature\n    FROM (\n        SELECT\n            o.id,\n            UNIX_TIMESTAMP(o.observed_at) * 1000 AS time,\n            o.value AS temperature,\n            o.observed_at\n        FROM observation AS o\n        INNER JOIN datastream AS d\n            ON d.id = o.datastream_id\n        INNER JOIN sensor AS s\n            ON s.id = d.sensor_id\n        WHERE s.device_code = 'SENSOR_DHT11_01'\n          AND d.observed_property = 'TEMPERATURE'\n        ORDER BY\n            o.observed_at DESC,\n            o.id DESC\n        LIMIT 30\n    ) AS latest\n    ORDER BY\n        latest.observed_at ASC,\n        latest.id ASC\n`;\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 210,
-        "y": 420,
-        "wires": [
-            [
-                "a9a4a647864027b8"
-            ]
-        ]
-    },
-    {
-        "id": "74ada797bd6b84cb",
-        "type": "inject",
-        "z": "448fe177639c9a7f",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "60",
-        "crontab": "",
-        "once": true,
-        "onceDelay": "2",
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 70,
-        "y": 560,
-        "wires": [
-            [
-                "4ede2903f840cf11",
-                "340272f9b4dff909"
-            ]
-        ]
-    },
-    {
-        "id": "a9a4a647864027b8",
-        "type": "mysql",
-        "z": "448fe177639c9a7f",
-        "mydb": "e0c5f134542ac77e",
-        "name": "history",
-        "x": 430,
-        "y": 420,
-        "wires": [
-            [
-                "83deb28ce379645d"
-            ]
-        ]
-    },
-    {
-        "id": "83deb28ce379645d",
-        "type": "function",
-        "z": "448fe177639c9a7f",
-        "name": "format temperature",
-        "func": "if (!Array.isArray(msg.payload)) {\n    node.error(\"Kết quả truy vấn không phải mảng\", msg);\n    return null;\n}\n\nmsg.payload = msg.payload\n    .map(row => ({\n        time: Number(row.time),\n        value: Number(row.temperature)\n    }))\n    .filter(point =>\n        Number.isFinite(point.time) &&\n        Number.isFinite(point.value)\n    );\n\nmsg.topic = \"Nhiệt độ\";\nmsg.action = \"replace\";\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 510,
-        "y": 520,
-        "wires": [
-            [
-                "57021935f0dacaa0",
-                "9bb23d2055ed6a63"
-            ]
-        ]
-    },
-    {
-        "id": "9bb23d2055ed6a63",
-        "type": "debug",
-        "z": "448fe177639c9a7f",
-        "name": "debug format",
-        "active": true,
-        "tosidebar": true,
-        "console": true,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 700,
-        "y": 620,
-        "wires": []
-    },
-    {
-        "id": "340272f9b4dff909",
-        "type": "function",
-        "z": "448fe177639c9a7f",
-        "name": "Query humidity history",
-        "func": "msg.topic = `\n    SELECT\n        latest.time,\n        latest.humidity\n    FROM (\n        SELECT\n            o.id,\n            UNIX_TIMESTAMP(o.observed_at) * 1000 AS time,\n            o.value AS humidity,\n            o.observed_at\n        FROM observation AS o\n        WHERE o.datastream_id = 2\n        ORDER BY\n            o.observed_at DESC,\n            o.id DESC\n        LIMIT 30\n    ) AS latest\n    ORDER BY\n        latest.observed_at ASC,\n        latest.id ASC\n`;\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 200,
-        "y": 680,
-        "wires": [
-            [
-                "ad6cfd5916aa1f37"
-            ]
-        ]
-    },
-    {
-        "id": "ad6cfd5916aa1f37",
-        "type": "mysql",
-        "z": "448fe177639c9a7f",
-        "mydb": "e0c5f134542ac77e",
-        "name": "history",
-        "x": 430,
-        "y": 680,
-        "wires": [
-            [
-                "b64d6798199659fd"
-            ]
-        ]
-    },
-    {
-        "id": "b64d6798199659fd",
-        "type": "function",
-        "z": "448fe177639c9a7f",
-        "name": "format humidity",
-        "func": "if (!Array.isArray(msg.payload)) {\n    node.error(\"Kết quả truy vấn độ ẩm không phải mảng\", msg);\n    return null;\n}\n\nconst points = msg.payload\n    .map(row => ({\n        time: Number(row.time),\n        value: Number(row.humidity)\n    }))\n    .filter(point =>\n        Number.isFinite(point.time) &&\n        Number.isFinite(point.value)\n    )\n    .sort((a, b) => a.time - b.time);\n\nmsg.topic = \"Độ ẩm\";\nmsg.action = \"replace\";\nmsg.payload = points;\n\nnode.status({\n    fill: points.length > 0 ? \"green\" : \"yellow\",\n    shape: \"dot\",\n    text: `${points.length} điểm`\n});\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 620,
-        "y": 680,
-        "wires": [
-            [
-                "990c71cf2476d3a7"
-            ]
-        ]
-    },
-    {
-        "id": "990c71cf2476d3a7",
-        "type": "ui-chart",
-        "z": "448fe177639c9a7f",
-        "group": "292a30d562b5eeae",
-        "name": "",
-        "label": "Biểu đồ độ ẩm",
-        "order": 2,
-        "chartType": "line",
-        "category": "topic",
-        "categoryType": "msg",
-        "xAxisLabel": "",
-        "xAxisProperty": "time",
-        "xAxisPropertyType": "property",
-        "xAxisType": "time",
-        "xAxisFormat": "",
-        "xAxisFormatType": "{HH}:{mm}",
-        "xmin": "",
-        "xmax": "",
-        "yAxisLabel": "",
-        "yAxisProperty": "value",
-        "yAxisPropertyType": "property",
-        "ymin": "0",
-        "ymax": "100",
-        "bins": 10,
-        "action": "replace",
-        "stackSeries": false,
-        "pointShape": "false",
-        "pointRadius": 4,
-        "showLegend": true,
-        "removeOlder": "0",
-        "removeOlderUnit": "3600",
-        "removeOlderPoints": "",
-        "colors": [
-            "#1ba71b",
-            "#ff0000",
-            "#ff7f0e",
-            "#1ba71b",
-            "#a347e1",
-            "#d62728",
-            "#ff9896",
-            "#9467bd",
-            "#c5b0d5"
-        ],
-        "textColor": [
-            "#666666"
-        ],
-        "textColorDefault": true,
-        "gridColor": [
-            "#e5e5e5"
-        ],
-        "gridColorDefault": true,
-        "width": 6,
-        "height": "4",
-        "className": "",
-        "interpolation": "linear",
-        "x": 880,
-        "y": 680,
-        "wires": [
-            []
         ]
     },
     {
@@ -2760,8 +2683,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 430,
-        "y": 320,
+        "x": 490,
+        "y": 300,
         "wires": [
             [
                 "f93f228cc0d074fd"
@@ -2778,22 +2701,22 @@
         "name": "environment status",
         "order": 1,
         "width": "12",
-        "height": "3",
+        "height": "4",
         "head": "",
-        "format": "<template>\n    <div class=\"environment-card\">\n        <div class=\"environment-grid\">\n            <div class=\"environment-item\">\n                <div class=\"environment-header\">\n                    <div>\n                        <div class=\"environment-title\">Nhiệt độ</div>\n                        <div class=\"environment-range\">Bình thường: 25–32 °C</div>\n                    </div>\n\n                    <div :class=\"statusClass(msg.payload?.temperature)\">\n                        <span class=\"status-dot\"></span>\n                        {{ statusText(msg.payload?.temperature) }}\n                    </div>\n                </div>\n\n                <div class=\"environment-value\">\n                    {{ valueText(msg.payload?.temperature) }}\n                </div>\n            </div>\n\n            <div class=\"environment-item\">\n                <div class=\"environment-header\">\n                    <div>\n                        <div class=\"environment-title\">Độ ẩm</div>\n                        <div class=\"environment-range\">Bình thường: 80–90%</div>\n                    </div>\n\n                    <div :class=\"statusClass(msg.payload?.humidity)\">\n                        <span class=\"status-dot\"></span>\n                        {{ statusText(msg.payload?.humidity) }}\n                    </div>\n                </div>\n\n                <div class=\"environment-value\">\n                    {{ valueText(msg.payload?.humidity) }}\n                </div>\n            </div>\n\n            <div class=\"environment-item\">\n                <div class=\"environment-header\">\n                    <div>\n                        <div class=\"environment-title\">Độ sáng</div>\n                        <div class=\"environment-range\">Bình thường: 20–30%</div>\n                    </div>\n\n                    <div :class=\"statusClass(msg.payload?.light_level)\">\n                        <span class=\"status-dot\"></span>\n                        {{ statusText(msg.payload?.light_level) }}\n                    </div>\n                </div>\n\n                <div class=\"environment-value\">\n                    {{ valueText(msg.payload?.light_level) }}\n                </div>\n            </div>\n        </div>\n\n        <div class=\"environment-updated\">\n            Cập nhật gần nhất: {{ msg.payload?.updated_at || '--' }}\n        </div>\n    </div>\n</template>\n\n<script>\n    export default {\n        methods: {\n            valueText(item) {\n                if (\n                    !item ||\n                    item.value === null ||\n                    item.value === undefined ||\n                    !Number.isFinite(Number(item.value))\n                ) {\n                    return \"--\";\n                }\n\n                return `${Number(item.value).toFixed(1)} ${item.unit || \"\"}`;\n            },\n\n            statusText(item) {\n                return item?.label || \"Chưa có dữ liệu\";\n            },\n\n            statusClass(item) {\n                const status = String(item?.status || \"NO_DATA\")\n                    .trim()\n                    .toUpperCase();\n\n                if (status === \"NORMAL\") {\n                    return \"environment-badge badge-normal\";\n                }\n\n                if (status === \"ABNORMAL\") {\n                    return \"environment-badge badge-abnormal\";\n                }\n\n                return \"environment-badge badge-no-data\";\n            }\n        }\n    }\n</script>\n\n<style>\n    .environment-card {\n        width: 100%;\n        height: 100%;\n        box-sizing: border-box;\n        overflow: hidden;\n\n        background: #ffffff;\n        border: 1px solid #e2e8f0;\n        border-radius: 18px;\n        padding: 14px;\n\n        box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);\n    }\n\n    .environment-grid {\n        display: grid;\n        grid-template-columns: repeat(3, minmax(0, 1fr));\n        gap: 12px;\n    }\n\n    .environment-item {\n        min-width: 0;\n        box-sizing: border-box;\n\n        background: #f8fafc;\n        border: 1px solid #e2e8f0;\n        border-radius: 14px;\n        padding: 14px 16px;\n    }\n\n    .environment-header {\n        display: flex;\n        align-items: flex-start;\n        justify-content: space-between;\n        gap: 12px;\n    }\n\n    .environment-title {\n        color: #0f172a;\n        font-size: 17px;\n        font-weight: 700;\n        line-height: 1.2;\n    }\n\n    .environment-range {\n        margin-top: 5px;\n        color: #64748b;\n        font-size: 13px;\n        line-height: 1.3;\n    }\n\n    .environment-value {\n        margin-top: 14px;\n        color: #0f172a;\n        font-size: 28px;\n        font-weight: 750;\n        line-height: 1;\n    }\n\n    .environment-badge {\n        display: inline-flex;\n        align-items: center;\n        justify-content: center;\n        flex-shrink: 0;\n\n        gap: 7px;\n        min-height: 34px;\n        padding: 5px 10px;\n        box-sizing: border-box;\n        border-radius: 999px;\n\n        font-size: 13px;\n        font-weight: 700;\n        line-height: 1;\n        white-space: nowrap;\n    }\n\n    .status-dot {\n        width: 8px;\n        height: 8px;\n        flex: 0 0 auto;\n        border-radius: 50%;\n    }\n\n    .badge-normal {\n        color: #15803d;\n        background: #dcfce7;\n    }\n\n    .badge-normal .status-dot {\n        background: #22c55e;\n    }\n\n    .badge-abnormal {\n        color: #b91c1c;\n        background: #fee2e2;\n    }\n\n    .badge-abnormal .status-dot {\n        background: #ef4444;\n    }\n\n    .badge-no-data {\n        color: #475569;\n        background: #e2e8f0;\n    }\n\n    .badge-no-data .status-dot {\n        background: #64748b;\n    }\n\n    .environment-updated {\n        margin-top: 10px;\n        color: #64748b;\n        font-size: 12px;\n        text-align: right;\n    }\n\n    @media (max-width: 900px) {\n        .environment-grid {\n            grid-template-columns: 1fr;\n        }\n    }\n\n    @media (max-width: 500px) {\n        .environment-card {\n            padding: 10px;\n        }\n\n        .environment-header {\n            align-items: center;\n        }\n\n        .environment-title {\n            font-size: 16px;\n        }\n\n        .environment-value {\n            font-size: 24px;\n        }\n\n        .environment-badge {\n            min-height: 30px;\n            padding: 4px 8px;\n            font-size: 12px;\n        }\n    }\n</style>",
+        "format": "<template>\n    <div class=\"environment-card\">\n        <div class=\"environment-grid\">\n            <!-- NHIỆT ĐỘ -->\n            <div class=\"environment-item\">\n                <div class=\"environment-header\">\n                    <div>\n                        <div class=\"environment-title\">Nhiệt độ</div>\n                        <div class=\"environment-range\">\n                            Bình thường: 25–32 °C\n                        </div>\n                    </div>\n\n                    <div :class=\"statusClass(msg.payload?.temperature)\">\n                        <span class=\"status-dot\"></span>\n                        {{ statusText(msg.payload?.temperature) }}\n                    </div>\n                </div>\n\n                <div class=\"environment-value\">\n                    {{ valueText(msg.payload?.temperature) }}\n                </div>\n            </div>\n\n            <!-- ĐỘ ẨM KHÔNG KHÍ -->\n            <div class=\"environment-item\">\n                <div class=\"environment-header\">\n                    <div>\n                        <div class=\"environment-title\">Độ ẩm không khí</div>\n                        <div class=\"environment-range\">\n                            Bình thường: 80–90%\n                        </div>\n                    </div>\n\n                    <div :class=\"statusClass(msg.payload?.humidity)\">\n                        <span class=\"status-dot\"></span>\n                        {{ statusText(msg.payload?.humidity) }}\n                    </div>\n                </div>\n\n                <div class=\"environment-value\">\n                    {{ valueText(msg.payload?.humidity) }}\n                </div>\n            </div>\n\n            <!-- ĐỘ SÁNG -->\n            <div class=\"environment-item\">\n                <div class=\"environment-header\">\n                    <div>\n                        <div class=\"environment-title\">Độ sáng</div>\n                        <div class=\"environment-range\">\n                            Bình thường: 20–30%\n                        </div>\n                    </div>\n\n                    <div :class=\"statusClass(msg.payload?.light_level)\">\n                        <span class=\"status-dot\"></span>\n                        {{ statusText(msg.payload?.light_level) }}\n                    </div>\n                </div>\n\n                <div class=\"environment-value\">\n                    {{ valueText(msg.payload?.light_level) }}\n                </div>\n            </div>\n\n            <!-- ĐỘ ẨM GIÁ THỂ -->\n            <div class=\"environment-item\">\n                <div class=\"environment-header\">\n                    <div>\n                        <div class=\"environment-title\">\n                            Độ ẩm giá thể\n                        </div>\n\n                        <div class=\"environment-range\">\n                            Bình thường: 60–80%\n                        </div>\n                    </div>\n\n                    <div\n                        :class=\"\n                            statusClass(\n                                msg.payload?.substrate_moisture\n                            )\n                        \"\n                    >\n                        <span class=\"status-dot\"></span>\n\n                        {{\n                            statusText(\n                                msg.payload?.substrate_moisture\n                            )\n                        }}\n                    </div>\n                </div>\n\n                <div class=\"environment-value\">\n                    {{\n                        valueText(\n                            msg.payload?.substrate_moisture\n                        )\n                    }}\n                </div>\n            </div>\n        </div>\n\n        <div class=\"environment-updated\">\n            Cập nhật gần nhất:\n            {{ msg.payload?.updated_at || \"--\" }}\n        </div>\n    </div>\n</template>\n\n<script>\nexport default {\n    methods: {\n        valueText(item) {\n            if (\n                !item ||\n                item.value === null ||\n                item.value === undefined ||\n                !Number.isFinite(Number(item.value))\n            ) {\n                return \"--\";\n            }\n\n            const unit =\n                item.unit_symbol ||\n                item.unit ||\n                \"\";\n\n            return `${Number(item.value).toFixed(1)} ${unit}`;\n        },\n\n        statusText(item) {\n            return item?.label || \"Chưa có dữ liệu\";\n        },\n\n        statusClass(item) {\n            const status = String(\n                item?.status || \"NO_DATA\"\n            )\n                .trim()\n                .toUpperCase();\n\n            if (status === \"NORMAL\") {\n                return \"environment-badge badge-normal\";\n            }\n\n            if (status === \"ABNORMAL\") {\n                return \"environment-badge badge-abnormal\";\n            }\n\n            return \"environment-badge badge-no-data\";\n        }\n    }\n};\n</script>\n\n<style>\n.environment-card {\n    width: 100%;\n    height: 100%;\n    box-sizing: border-box;\n    overflow: hidden;\n\n    background: #ffffff;\n    border: 1px solid #e2e8f0;\n    border-radius: 18px;\n    padding: 14px;\n\n    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);\n}\n\n.environment-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }\n\n.environment-item {\n    min-width: 0;\n    box-sizing: border-box;\n\n    background: #f8fafc;\n    border: 1px solid #e2e8f0;\n    border-radius: 14px;\n    padding: 14px 16px;\n}\n\n.environment-header {\n    display: flex;\n    align-items: flex-start;\n    justify-content: space-between;\n    gap: 12px;\n}\n\n.environment-title {\n    color: #0f172a;\n    font-size: 17px;\n    font-weight: 700;\n    line-height: 1.2;\n}\n\n.environment-range {\n    margin-top: 5px;\n    color: #64748b;\n    font-size: 13px;\n    line-height: 1.3;\n}\n\n.environment-value {\n    margin-top: 14px;\n    color: #0f172a;\n    font-size: 28px;\n    font-weight: 750;\n    line-height: 1;\n}\n\n.environment-badge {\n    display: inline-flex;\n    align-items: center;\n    justify-content: center;\n    flex-shrink: 0;\n\n    gap: 7px;\n    min-height: 34px;\n    padding: 5px 10px;\n    box-sizing: border-box;\n    border-radius: 999px;\n\n    font-size: 13px;\n    font-weight: 700;\n    line-height: 1;\n    white-space: nowrap;\n}\n\n.status-dot {\n    width: 8px;\n    height: 8px;\n    flex: 0 0 auto;\n    border-radius: 50%;\n}\n\n.badge-normal {\n    color: #15803d;\n    background: #dcfce7;\n}\n\n.badge-normal .status-dot {\n    background: #22c55e;\n}\n\n.badge-abnormal {\n    color: #b91c1c;\n    background: #fee2e2;\n}\n\n.badge-abnormal .status-dot {\n    background: #ef4444;\n}\n\n.badge-no-data {\n    color: #475569;\n    background: #e2e8f0;\n}\n\n.badge-no-data .status-dot {\n    background: #64748b;\n}\n\n.environment-updated {\n    margin-top: 10px;\n    color: #64748b;\n    font-size: 12px;\n    text-align: right;\n}\n\n@media (max-width: 900px) {\n    .environment-grid {\n        grid-template-columns: 1fr;\n    }\n}\n\n@media (max-width: 500px) {\n    .environment-card {\n        padding: 10px;\n    }\n\n    .environment-header {\n        align-items: center;\n    }\n\n    .environment-title {\n        font-size: 16px;\n    }\n\n    .environment-value {\n        font-size: 24px;\n    }\n\n    .environment-badge {\n        min-height: 30px;\n        padding: 4px 8px;\n        font-size: 12px;\n    }\n}\n</style>",
         "storeOutMessages": true,
         "passthru": true,
         "resendOnRefresh": true,
         "templateScope": "local",
         "className": "",
-        "x": 780,
-        "y": 280,
+        "x": 770,
+        "y": 300,
         "wires": [
             []
         ]
     },
     {
-        "id": "c8f04fa46784dae3",
+        "id": "9b7755d1facdfddf",
         "type": "global-config",
         "env": [],
         "modules": {
