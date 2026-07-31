@@ -14,7 +14,7 @@ namespace AppConfig
 
     namespace Mqtt
     {
-        // constexpr char HOST[] = "10.13.146.19";
+        // constexpr char HOST[] = "192.168.137.42";
         constexpr char HOST[] = "192.168.1.157";
 
         constexpr uint16_t PORT = 1883;
@@ -46,7 +46,7 @@ namespace AppConfig
         constexpr unsigned long MQTT_RECONNECT_MS = 5000;
 
         constexpr unsigned long DEFAULT_SENSING_INTERVAL_MS =
-            30000;
+            5000;
     }
 
     // =====================================================
