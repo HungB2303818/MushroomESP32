@@ -1,0 +1,10 @@
+version: "3.9"
+
+services:
+  emqx:
+    image: emqx:latest
+    container_name: EMQX
+    restart: unless-stopped
+
+    ports:
+      - "1883:1883"
